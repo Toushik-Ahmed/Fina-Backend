@@ -1,12 +1,9 @@
-import Accounts from '@/components/accounts/Accounts'
-import React from 'react'
+import Accounts from '@/components/accounts/Accounts';
 
-type Props = {}
+type Props = {};
 
 function page({}: Props) {
-  return (
-    <Accounts />
-  )
+  return <Accounts />;
 }
 
-export default page
+export default page;

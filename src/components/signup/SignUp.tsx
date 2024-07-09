@@ -21,23 +21,32 @@ function SignUp({}: Props) {
           <div className="font-sans text-slate-400 mb-[2vh]">
             Start with no payment, cancel anytime.
           </div>
-          <div className="my-[2vh] font-sans w-full">
-            <input
-              type="text"
-              placeholder="Email address"
-              className="w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 text-white placeholder-slate-400 "
-            />
-          </div>
-          <div className="my-[2vh] font-sans w-full">
-            <input
-              type="password"
-              placeholder="Password"
-              className="w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 text-white placeholder-slate-400 "
-            />
-          </div>
-          <button className="w-full px-[1vw] py-[1vh]  rounded-lg bg-green-400 text-slate-900 font-semibold hover:bg-green-300 transition">
-            Sign Up
-          </button>
+          <form className="w-full">
+            <div className="my-[2vh] font-sans w-full">
+              <input
+                type="text"
+                placeholder="User Name"
+                className="w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 text-white placeholder-slate-400 "
+              />
+            </div>
+            <div className="my-[2vh] font-sans w-full">
+              <input
+                type="text"
+                placeholder="Email address"
+                className="w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 text-white placeholder-slate-400 "
+              />
+            </div>
+            <div className="my-[2vh] font-sans w-full">
+              <input
+                type="password"
+                placeholder="Password"
+                className="w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 text-white placeholder-slate-400 "
+              />
+            </div>
+            <button className="w-full px-[1vw] py-[1vh]  rounded-lg bg-green-400 text-slate-900 font-semibold hover:bg-green-300 transition">
+              Sign Up
+            </button>
+          </form>
           <div className="text-slate-400 text-xs mt-[2vh]">
             By clicking the button above, you agree to our{' '}
             <a href="#" className="text-green-400 underline">
