@@ -12,11 +12,11 @@ function LeftNavbar({}: Props) {
   return (
     <div className="w-[18vw] bg-gray-800 fixed h-full">
       <div className="">
-        <h1 className="text-xl text-white text-center font-bold  py-[2vh] px-[2vw]">
+        <h1 className="text-xl text-white  font-bold  py-[2vh] px-[2vw]">
           Users Name
         </h1>
       </div>
-      <hr />
+
       <ul className="mt-[3vh] text-white font-bold">
         <li className="mb-[2vh] rounded hover:shadow hover:bg-green-600 py-[2vh]">
           <a href="" className="flex items-center px-[2vw]">

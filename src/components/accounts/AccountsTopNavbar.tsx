@@ -2,7 +2,7 @@ import { FaExchangeAlt, FaListAlt, FaUser } from 'react-icons/fa';
 
 type Props = {};
 
-function AccountElement({}: Props) {
+function AccountstopNavbar({}: Props) {
   return (
     <div className="ml-[18vw] w-full h-[8.3vh] py-[2vh] bg-gray-800 text-white">
       <div className="flex items-center">
@@ -26,4 +26,4 @@ function AccountElement({}: Props) {
   );
 }
 
-export default AccountElement;
+export default AccountstopNavbar;

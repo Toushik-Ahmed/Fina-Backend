@@ -1,24 +1,20 @@
-import React from 'react'
-import LeftNavbar from './LeftNavbar'
-import AccountElement from './AccountElement'
+import LeftNavbar from './LeftNavbar';
 
-type Props = {}
+import AccountstopNavbar from './AccountsTopNavbar';
+
+type Props = {};
 
 function Accounts({}: Props) {
   return (
-    <div className='flex'>
+    <div className="flex">
       <div className="w-20vw">
-
-      <LeftNavbar />
+        <LeftNavbar />
       </div>
-      <div className="w-80vw">
-
-      <AccountElement />
+      <div className="w-full">
+        <AccountstopNavbar />
       </div>
     </div>
-
-
-  )
+  );
 }
 
-export default Accounts
+export default Accounts;
