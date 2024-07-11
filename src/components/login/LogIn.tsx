@@ -1,6 +1,16 @@
+import { logIn } from '@/services/apiServices';
+import { useState } from 'react';
+
 type Props = {};
 
+const[user,setUser]=useState()
+
 function LogIn({}: Props) {
+
+
+
+
+
   return (
     <div className="h-screen flex items-center justify-center bg-[#242526]">
       <div className="text-center bg-[#242528] p-[4vh] rounded-lg shadow-lg">
