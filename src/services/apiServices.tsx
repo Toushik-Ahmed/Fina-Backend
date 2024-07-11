@@ -4,7 +4,7 @@
 
 import axios from 'axios';
 
-const baseUrl = process.env.BASE_URI;
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URI;
 
 type SignUpUser = {
   username: string;
@@ -30,6 +30,7 @@ export const signUp = async function signUp(data: SignUpUser) {
 // Login function
 export const logIn = async function logIn(data: LogInUser) {
   try {
+    console.log(`${baseUrl}/login`)
     const response = await axios.post(`${baseUrl}/login`, data);
     console.log(response.data);
   } catch (error) {

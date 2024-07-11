@@ -1,14 +1,22 @@
-import { logIn } from '@/services/apiServices';
-import { useState } from 'react';
+import { logIn, signUp } from '@/services/apiServices';
+import { FormEvent, useState } from 'react';
 
 type Props = {};
 
-const[user,setUser]=useState()
-
 function LogIn({}: Props) {
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
 
-
-
+  const handleSubmit=async (e:FormEvent<HTMLFormElement>)=>{
+    e.preventDefault();
+    const userData={email:userEmail,password:userPassword}
+    try {
+      const newUser=await logIn(userData);
+      console.log(newUser)
+    } catch (err) {
+console.log(err)
+    }
+  }
 
 
   return (
@@ -31,9 +39,10 @@ function LogIn({}: Props) {
           <div className="font-sans text-slate-400 mb-[2vh]">
             Start with no payment, cancel anytime.
           </div>
-          <form className="w-full">
+          <form  onSubmit={handleSubmit} className="w-full  ">
             <div className="my-[2vh] font-sans w-full">
               <input
+              onChange={(e)=>setUserEmail (e.target.value)}
                 type="text"
                 placeholder="Email address"
                 className="w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 text-white placeholder-slate-400"
@@ -44,6 +53,7 @@ function LogIn({}: Props) {
                 type="password"
                 placeholder="Password"
                 className="w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 text-white placeholder-slate-400"
+                onChange={(e)=>setUserPassword (e.target.value)}
               />
             </div>
             <button className="w-full px-[1vw] py-[1vh] rounded-lg bg-green-400 text-slate-900 font-semibold hover:bg-green-300 transition">
