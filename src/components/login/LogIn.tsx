@@ -1,23 +1,42 @@
-import { logIn, signUp } from '@/services/apiServices';
+import { logIn } from '@/services/apiServices';
+import { setToken } from '@/services/TokenService';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
+import { z } from 'zod';
 
 type Props = {};
 
 function LogIn({}: Props) {
+  const router = useRouter();
+
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
 
-  const handleSubmit=async (e:FormEvent<HTMLFormElement>)=>{
-    e.preventDefault();
-    const userData={email:userEmail,password:userPassword}
-    try {
-      const newUser=await logIn(userData);
-      console.log(newUser)
-    } catch (err) {
-console.log(err)
-    }
-  }
+  const [emailError, setEmailError] = useState(false);
+  const [loginError, setLoginError] = useState(false);
 
+  const emailSchema = z.string().email();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const _emailError = !emailSchema.safeParse(userEmail).success;
+    setEmailError(_emailError);
+    if (_emailError) {
+      return;
+    }
+    const userData = { email: userEmail, password: userPassword };
+    try {
+      const accessTokenResponse = await logIn(userData);
+      setToken(accessTokenResponse.accessToken);
+      setUserEmail('');
+      setUserPassword('');
+      router.push('/accounts');
+    } catch (err) {
+      setLoginError(true);
+      console.log(err);
+    }
+  };
 
   return (
     <div className="h-screen flex items-center justify-center bg-[#242526]">
@@ -39,42 +58,67 @@ console.log(err)
           <div className="font-sans text-slate-400 mb-[2vh]">
             Start with no payment, cancel anytime.
           </div>
-          <form  onSubmit={handleSubmit} className="w-full  ">
+          <form onSubmit={handleSubmit} className="w-full  ">
             <div className="my-[2vh] font-sans w-full">
               <input
-              onChange={(e)=>setUserEmail (e.target.value)}
+                onChange={(e) => {
+                  setUserEmail(e.target.value);
+                  setEmailError(false);
+                  setLoginError(false);
+                }}
                 type="text"
+                value={userEmail}
                 placeholder="Email address"
-                className="w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 text-white placeholder-slate-400"
+                className={
+                  'w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 placeholder-slate-400 ' +
+                  (emailError ? 'text-red-500' : 'text-white')
+                }
               />
+              {emailError && (
+                <div className="text-left text-red-500 px-2 pt-1">
+                  Invalid Email
+                </div>
+              )}
             </div>
             <div className="my-[2vh] font-sans w-full">
               <input
                 type="password"
+                value={userPassword}
                 placeholder="Password"
                 className="w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 text-white placeholder-slate-400"
-                onChange={(e)=>setUserPassword (e.target.value)}
+                onChange={(e) => {
+                  setUserPassword(e.target.value);
+                  setLoginError(false);
+                }}
               />
             </div>
-            <button className="w-full px-[1vw] py-[1vh] rounded-lg bg-green-400 text-slate-900 font-semibold hover:bg-green-300 transition">
+            <button
+              type="submit"
+              className="w-full px-[1vw] py-[1vh] rounded-lg bg-green-400 text-slate-900 font-semibold hover:bg-green-300 transition"
+            >
               Sign in
             </button>
+            {loginError && (
+              <div className="text-center text-red-500 px-2 pt-1">
+                Invalid Email or password
+              </div>
+            )}
           </form>
           <div className="text-slate-400 text-xs mt-[2vh]">
             By clicking the button above, you agree to our{' '}
-            <a href="#" className="text-green-400 underline">
+            <Link href="#" className="text-green-400 underline">
               Terms of Service
-            </a>{' '}
+            </Link>{' '}
             and{' '}
-            <a href="#" className="text-green-400 underline">
+            <Link href="#" className="text-green-400 underline">
               Privacy Policy
-            </a>
+            </Link>
           </div>
           <div className="text-slate-400 text-sm mt-[2vh]">
             Don't have an account?{' '}
-            <a href="#" className="text-green-400 underline">
+            <Link href="/signup" className="text-green-400 underline">
               Create one
-            </a>
+            </Link>
           </div>
         </div>
       </div>

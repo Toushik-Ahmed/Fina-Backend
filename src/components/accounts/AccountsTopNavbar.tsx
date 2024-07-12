@@ -1,28 +1,33 @@
-import { FaExchangeAlt, FaListAlt, FaUser } from 'react-icons/fa';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 type Props = {};
 
 function AccountstopNavbar({}: Props) {
   return (
-    <div className="ml-[18vw] w-full h-[8.3vh] py-[2vh] bg-gray-800 text-white">
-      <div className="flex items-center">
-        <a href="" className="flex items-center px-[4vw]">
-          <FaUser className="mr-[1vw]" />
-          Accounts
-        </a>
-        <a href="" className="flex items-center px-[4vw]">
-          <FaExchangeAlt className="mr-[1vw]" />
+    <Tabs defaultValue="account" className="w-full">
+      <TabsList className="w-full">
+        <TabsTrigger value="account" className="flex-grow">
+          Account
+        </TabsTrigger>
+        <TabsTrigger value="transaction" className="flex-grow">
           Transactions
-        </a>
-        <a href="" className="flex items-center px-[4vw]">
-          <FaListAlt className="mr-[1vw]" />
+        </TabsTrigger>
+        <TabsTrigger value="categories" className="flex-grow">
           Categories
-        </a>
-        <button className="bg-green-800 px-[1vw] py-[0.5vh] ml-[25vw] rounded">
-          Add Account
-        </button>
-      </div>
-    </div>
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value="account">
+        Make changes to your account here.
+      </TabsContent>
+      <TabsContent value="transaction">
+        <div>transaction tab </div>
+        <div>transaction tab </div>
+        <div>transaction tab </div>
+        <div>transaction tab </div>
+        <div>transaction tab </div>
+      </TabsContent>
+      <TabsContent value="categories">Categories</TabsContent>
+    </Tabs>
   );
 }
 

@@ -1,25 +1,50 @@
 import { signUp } from '@/services/apiServices';
-
+import { setToken } from '@/services/TokenService';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
+import { z } from 'zod';
 
 type Props = {};
 
 function SignUp({}: Props) {
+  const router = useRouter();
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [userName, setUserName] = useState('');
+
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [signUpError, setSignUpError] = useState(false);
+
+  const passwordSchema = z.string().min(8);
+  const emailSchema = z.string().email();
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const _emailError = !emailSchema.safeParse(userEmail).success;
+    const _passwordError = !passwordSchema.safeParse(userPassword).success;
+    setEmailError(_emailError);
+    setPasswordError(_passwordError);
+    if (_emailError || _passwordError) {
+      return;
+    }
+
     const userData = {
       username: userName,
       email: userEmail,
       password: userPassword,
     };
     try {
-      const newUser = await signUp(userData);
-      console.log(newUser);
+      const accessTokenResponse = await signUp(userData);
+      setToken(accessTokenResponse.accessToken);
+      setUserEmail('');
+      setUserName('');
+      setUserPassword('');
+      router.push('/accounts');
     } catch (err) {
-      console.log(err);
+      setSignUpError(true);
+      console.error(err);
     }
   };
 
@@ -46,47 +71,85 @@ function SignUp({}: Props) {
           <form onSubmit={handleSubmit} className="w-full">
             <div className="my-[2vh] font-sans w-full">
               <input
-                onChange={(e) => setUserName(e.target.value)}
+                onChange={(e) => {
+                  setUserName(e.target.value);
+                  setSignUpError(false);
+                }}
                 type="text"
+                value={userName}
                 placeholder="User Name"
                 className="w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 text-white placeholder-slate-400 "
               />
             </div>
             <div className="my-[2vh] font-sans w-full">
               <input
-                onChange={(e) => setUserEmail(e.target.value)}
+                onChange={(e) => {
+                  setUserEmail(e.target.value);
+                  setEmailError(false);
+                  setSignUpError(false);
+                }}
+                value={userEmail}
                 type="text"
                 placeholder="Email address"
-                className="w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 text-white placeholder-slate-400 "
+                className={
+                  'w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 placeholder-slate-400 ' +
+                  (emailError ? 'text-red-500' : 'text-white')
+                }
               />
+              {emailError && (
+                <div className="text-left text-red-500 px-2 pt-1">
+                  Invalid Email
+                </div>
+              )}
             </div>
             <div className="my-[2vh] font-sans w-full">
               <input
-                onChange={(e) => setUserPassword(e.target.value)}
+                onChange={(e) => {
+                  setUserPassword(e.target.value);
+                  setPasswordError(false);
+                  setSignUpError(false);
+                }}
                 type="password"
+                value={userPassword}
                 placeholder="Password"
-                className="w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 text-white placeholder-slate-400 "
+                className={
+                  'w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 placeholder-slate-400 ' +
+                  (passwordError ? 'text-red-500' : 'text-white')
+                }
               />
+              {passwordError && (
+                <div className="text-left text-red-500 px-2 pt-1">
+                  Password needs to be at least 8 characters long
+                </div>
+              )}
             </div>
-            <button className="w-full px-[1vw] py-[1vh]  rounded-lg bg-green-400 text-slate-900 font-semibold hover:bg-green-300 transition">
+            <button
+              type="submit"
+              className="w-full px-[1vw] py-[1vh]  rounded-lg bg-green-400 text-slate-900 font-semibold hover:bg-green-300 transition"
+            >
               Sign Up
             </button>
+            {signUpError && (
+              <div className="text-center text-red-500 px-2 pt-1">
+                Error signing up
+              </div>
+            )}
           </form>
           <div className="text-slate-400 text-xs mt-[2vh]">
             By clicking the button above, you agree to our{' '}
-            <a href="#" className="text-green-400 underline">
+            <Link href="#" className="text-green-400 underline">
               Terms of Service
-            </a>{' '}
+            </Link>{' '}
             and{' '}
-            <a href="#" className="text-green-400 underline">
+            <Link href="#" className="text-green-400 underline">
               Privacy Policy
-            </a>
+            </Link>
           </div>
           <div className="text-slate-400 text-sm mt-[2vh]">
             Already have an account?{' '}
-            <a href="#" className="text-green-400 underline">
+            <Link href="/login" className="text-green-400 underline">
               Log in
-            </a>
+            </Link>
           </div>
         </div>
       </div>
