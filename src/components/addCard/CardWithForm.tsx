@@ -65,7 +65,7 @@ export function CardWithForm({ onSubmit }: Props) {
         <form>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="accountName">Account Name</Label>
+              <Label htmlFor="cardNumber">Account Name</Label>
               <Input
                 value={cardInfo.cardNumber}
                 onChange={(ev) => {
