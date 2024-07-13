@@ -1,4 +1,4 @@
-import { signUp } from '@/services/apiServices';
+import { signUp } from '@/services/authServices';
 import { setToken } from '@/services/TokenService';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -41,7 +41,7 @@ function SignUp({}: Props) {
       setUserEmail('');
       setUserName('');
       setUserPassword('');
-      router.push('/accounts');
+      router.push('/l/accounts');
     } catch (err) {
       setSignUpError(true);
       console.error(err);

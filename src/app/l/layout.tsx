@@ -11,7 +11,7 @@ export default function AccountLayout({
     <section className='flex'>
       <LeftNavbar />
 
-      <div className='nested-routes flex-grow'>{children}</div>
+      <div className='nested-routes flex-grow overflow-x-auto'>{children}</div>
     </section>
   );
 }

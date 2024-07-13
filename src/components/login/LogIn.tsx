@@ -1,17 +1,17 @@
-import { logIn } from '@/services/apiServices';
-import { setToken } from '@/services/TokenService';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
-import { z } from 'zod';
+import { logIn } from "@/services/authServices";
+import { setToken } from "@/services/TokenService";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
+import { z } from "zod";
 
 type Props = {};
 
 function LogIn({}: Props) {
   const router = useRouter();
 
-  const [userEmail, setUserEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
 
   const [emailError, setEmailError] = useState(false);
   const [loginError, setLoginError] = useState(false);
@@ -29,9 +29,9 @@ function LogIn({}: Props) {
     try {
       const accessTokenResponse = await logIn(userData);
       setToken(accessTokenResponse.accessToken);
-      setUserEmail('');
-      setUserPassword('');
-      router.push('/accounts');
+      setUserEmail("");
+      setUserPassword("");
+      router.push("/l/accounts");
     } catch (err) {
       setLoginError(true);
       console.log(err);
@@ -70,8 +70,8 @@ function LogIn({}: Props) {
                 value={userEmail}
                 placeholder="Email address"
                 className={
-                  'w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 placeholder-slate-400 ' +
-                  (emailError ? 'text-red-500' : 'text-white')
+                  "w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 placeholder-slate-400 " +
+                  (emailError ? "text-red-500" : "text-white")
                 }
               />
               {emailError && (
@@ -105,17 +105,17 @@ function LogIn({}: Props) {
             )}
           </form>
           <div className="text-slate-400 text-xs mt-[2vh]">
-            By clicking the button above, you agree to our{' '}
+            By clicking the button above, you agree to our{" "}
             <Link href="#" className="text-green-400 underline">
               Terms of Service
-            </Link>{' '}
-            and{' '}
+            </Link>{" "}
+            and{" "}
             <Link href="#" className="text-green-400 underline">
               Privacy Policy
             </Link>
           </div>
           <div className="text-slate-400 text-sm mt-[2vh]">
-            Don't have an account?{' '}
+            Don't have an account?{" "}
             <Link href="/signup" className="text-green-400 underline">
               Create one
             </Link>
