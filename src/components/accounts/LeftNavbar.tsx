@@ -47,13 +47,25 @@ function LeftNavbar({}: Props) {
           </Link>
         </li>
         <li className="mb-[2vh] rounded hover:shadow hover:bg-green-600 ease-in-out duration-300 ">
-          <Link href="" className="flex items-center px-[2vw] py-[2vh]">
+          <Link
+            href="/l/basicBudgeting"
+            className={
+              'flex items-center px-[2vw] py-[2vh] ' +
+              (currentPath === '/l/basicBudgeting' ? 'bg-white text-black' : '')
+            }
+          >
             <FaMoneyBill className="inline-block w-[2vw] h-[2vh] mr-[1vw]" />
             Basic Budgeting
           </Link>
         </li>
         <li className="mb-[2vh] rounded hover:shadow hover:bg-green-600 ease-in-out duration-300 ">
-          <Link href="" className="flex items-center px-[2vw] py-[2vh]">
+          <Link
+            href="/l/cashOverFlow"
+            className={
+              'flex items-center px-[2vw] py-[2vh] ' +
+              (currentPath === '/l/cashOverFlow' ? 'bg-white text-black' : '')
+            }
+          >
             <FaChartLine className="inline-block w-[2vw] h-[2vh] mr-[1vw]" />
             Basic Cashflow Overflow
           </Link>
@@ -62,7 +74,13 @@ function LeftNavbar({}: Props) {
           className="mb-[2vh] rounded hover:shadow hover:bg-green-600 ease-in-out"
           duration-300
         >
-          <Link href="" className="flex items-center px-[2vw]  py-[2vh]">
+          <Link
+            href="/l/netWorth"
+            className={
+              'flex items-center px-[2vw] py-[2vh] ' +
+              (currentPath === '/l/netWorth' ? 'bg-white text-black' : '')
+            }
+          >
             <FaBalanceScale className="inline-block w-[2vw] h-[2vh] mr-[1vw]" />
             Net Worth Overview
           </Link>
