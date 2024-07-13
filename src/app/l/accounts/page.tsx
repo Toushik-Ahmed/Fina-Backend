@@ -1,9 +1,9 @@
-import AccountstopNavbar from '@/components/accounts/AccountsTopNavbar';
+import PersonalPage from "@/components/accounts/AccountsTopNavbar";
 
 type Props = {};
 
 function page({}: Props) {
-  return <AccountstopNavbar />;
+  return <div>Dashboard</div>;
 }
 
 export default page;

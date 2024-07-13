@@ -1,17 +1,21 @@
-import { signUp } from '@/services/authServices';
-import { setToken } from '@/services/TokenService';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
-import { z } from 'zod';
+import { signUp } from "@/services/authServices";
+import { setToken } from "@/services/TokenService";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
+import { z } from "zod";
+import { Button } from "../ui/button";
+import { CiLogin } from "react-icons/ci";
+import Image from "next/image";
+import logo from "@/assets/logo.png";
 
 type Props = {};
 
 function SignUp({}: Props) {
   const router = useRouter();
-  const [userEmail, setUserEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
-  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const [userName, setUserName] = useState("");
 
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -38,10 +42,7 @@ function SignUp({}: Props) {
     try {
       const accessTokenResponse = await signUp(userData);
       setToken(accessTokenResponse.accessToken);
-      setUserEmail('');
-      setUserName('');
-      setUserPassword('');
-      router.push('/l/accounts');
+      router.push("/l/accounts");
     } catch (err) {
       setSignUpError(true);
       console.error(err);
@@ -50,11 +51,18 @@ function SignUp({}: Props) {
 
   return (
     <div className="h-screen flex items-center justify-center bg-[#242526]">
-      <div className="text-center bg-[#242528] p-[4vh] rounded-lg shadow-lg">
+      <div className="text-center p-[4vh]">
         <div className="flex flex-col items-center">
-          <div className="flex items-center justify-center mb-[1vh]">
+          <div className="flex items-center justify-center mb-[1vh] gap-2">
+            <Image
+              width={64}
+              height={64}
+              src={logo}
+              alt="Fina Logo"
+              className="rounded"
+            />
             <div>
-              <div className="text-4xl font-sans font-bold text-green-400">
+              <div className="text-4xl font-sans font-bold text-green-400 flex">
                 Fina
               </div>
               <div className="font-sans font-normal text-sm text-slate-400">
@@ -92,8 +100,8 @@ function SignUp({}: Props) {
                 type="text"
                 placeholder="Email address"
                 className={
-                  'w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 placeholder-slate-400 ' +
-                  (emailError ? 'text-red-500' : 'text-white')
+                  "w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 placeholder-slate-400 " +
+                  (emailError ? "text-red-500" : "text-white")
                 }
               />
               {emailError && (
@@ -113,8 +121,8 @@ function SignUp({}: Props) {
                 value={userPassword}
                 placeholder="Password"
                 className={
-                  'w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 placeholder-slate-400 ' +
-                  (passwordError ? 'text-red-500' : 'text-white')
+                  "w-full px-[1vw] py-[1vh] rounded-lg bg-slate-800 placeholder-slate-400 " +
+                  (passwordError ? "text-red-500" : "text-white")
                 }
               />
               {passwordError && (
@@ -123,12 +131,12 @@ function SignUp({}: Props) {
                 </div>
               )}
             </div>
-            <button
+            <Button
               type="submit"
               className="w-full px-[1vw] py-[1vh]  rounded-lg bg-green-400 text-slate-900 font-semibold hover:bg-green-300 transition"
             >
-              Sign Up
-            </button>
+              <CiLogin className="w-4 h-4 mr-2" /> Sign Up
+            </Button>
             {signUpError && (
               <div className="text-center text-red-500 px-2 pt-1">
                 Error signing up
@@ -136,17 +144,17 @@ function SignUp({}: Props) {
             )}
           </form>
           <div className="text-slate-400 text-xs mt-[2vh]">
-            By clicking the button above, you agree to our{' '}
+            By clicking the button above, you agree to our{" "}
             <Link href="#" className="text-green-400 underline">
               Terms of Service
-            </Link>{' '}
-            and{' '}
+            </Link>{" "}
+            and{" "}
             <Link href="#" className="text-green-400 underline">
               Privacy Policy
             </Link>
           </div>
           <div className="text-slate-400 text-sm mt-[2vh]">
-            Already have an account?{' '}
+            Already have an account?{" "}
             <Link href="/login" className="text-green-400 underline">
               Log in
             </Link>

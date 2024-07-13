@@ -47,7 +47,7 @@ function LeftNavbar({}: Props) {
   }
 
   return (
-    <div className="bg-gray-800 h-[100vh] sticky top-[0px] w-[230px] flex-shrink-0">
+    <div className="bg-gray-800 h-[100vh] sticky top-[0px] w-[300px] flex-shrink-0">
       <Popover>
         <PopoverTrigger asChild>
           <Button variant={"ghost"} className="w-full mt-2">
@@ -60,7 +60,7 @@ function LeftNavbar({}: Props) {
             </div>
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[230px] bg-white text-white p-0">
+        <PopoverContent className="w-[300px] bg-white text-white p-0">
           <PopoverClose asChild>
             <Button variant={"ghost"} className="w-full " onClick={handleLogout}>
               <div className=" text-red-600 flex gap-2 items-center" >

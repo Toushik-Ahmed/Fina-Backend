@@ -1,6 +1,5 @@
-import AccountstopNavbar from '@/components/accounts/AccountsTopNavbar';
-import LeftNavbar from '@/components/accounts/LeftNavbar';
-
+import PersonalPage from "@/components/accounts/AccountsTopNavbar";
+import LeftNavbar from "@/components/shared/LeftNavbar";
 
 export default function AccountLayout({
   children, // will be a page or nested layout
@@ -8,10 +7,10 @@ export default function AccountLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className='flex'>
+    <section className="flex">
       <LeftNavbar />
 
-      <div className='nested-routes flex-grow overflow-x-auto'>{children}</div>
+      <div className="nested-routes flex-grow overflow-x-auto">{children}</div>
     </section>
   );
 }

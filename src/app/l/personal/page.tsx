@@ -1,9 +1,9 @@
-import React from 'react'
+
+import PersonalPage from "@/components/accounts/PersonalPage";
+import React from "react";
 
 function page() {
-  return (
-    <div>Hello personal</div>
-  )
+  return <PersonalPage />;
 }
 
-export default page
+export default page;
