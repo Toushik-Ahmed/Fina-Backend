@@ -12,14 +12,17 @@ type Props = {};
 
 const BasicBudgeting = (props: Props) => {
   return (
-    <div>
-      <Table className='w-[50vw]'>
+    <div className='p-10' >
+       <div className="text-slate-800 mb-8 font-bold">
+        Plan Your Basic Budget Here
+      </div>
+      <Table className="w-[50vw] h-fit-content ">
         <TableCaption>Expense by Category with Budget </TableCaption>
         <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">Category</TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead className="text-right">Budget</TableHead>
+          <TableRow className="">
+            <TableHead className="w-[25vw]">Category</TableHead>
+            <TableHead className="w-[25vw]">Amount</TableHead>
+            <TableHead>Budget</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

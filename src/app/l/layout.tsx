@@ -1,4 +1,4 @@
-import PersonalPage from "@/components/accounts/AccountsTopNavbar";
+import PersonalPage from "@/components/accounts/PersonalPage";
 import LeftNavbar from "@/components/shared/LeftNavbar";
 
 export default function AccountLayout({
