@@ -1,9 +1,7 @@
-import PersonalPage from "@/components/accounts/AccountsTopNavbar";
-
 type Props = {};
 
 function page({}: Props) {
-  return <div>Dashboard</div>;
+  return <div>Dashboard on</div>;
 }
 
 export default page;

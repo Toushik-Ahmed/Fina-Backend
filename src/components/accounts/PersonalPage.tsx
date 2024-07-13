@@ -1,10 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CardWithForm } from "../addCard/CardWithForm";
-import { MdOutlineAccountBalance } from "react-icons/md";
-import { GrTransaction } from "react-icons/gr";
-import { BiSolidCategoryAlt } from "react-icons/bi";
-import Accounts from "./Accounts";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { BiSolidCategoryAlt } from 'react-icons/bi';
+import { GrTransaction } from 'react-icons/gr';
+import { MdOutlineAccountBalance } from 'react-icons/md';
+import Accounts from './Accounts';
 
 type Props = {};
 
@@ -39,9 +37,6 @@ function PersonalPage({}: Props) {
           <div>transaction tab </div>
         </TabsContent>
         <TabsContent value="categories">Categories</TabsContent>
-        <TabsContent value="addButton">
-          <CardWithForm />
-        </TabsContent>
       </Tabs>
     </div>
   );

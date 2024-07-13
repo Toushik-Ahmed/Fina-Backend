@@ -1,3 +1,6 @@
+'use client';
+// CardWithForm.tsx
+
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -17,13 +20,26 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-export function CardWithForm() {
+type Props = {
+  onClose: () => void; // Callback to close the form
+};
+
+export function CardWithForm({ onClose }: Props) {
+  const handleCancel = () => {
+    onClose(); // Call onClose callback to close the form
+  };
+
+  const handleAdd = () => {
+    // Handle form submission here if needed
+    onClose(); // Close the form after submission
+  };
+
   return (
     <Card className="w-[350px] ">
-      <CardHeader>
+      <CardHeader className="text-center">
         <CardTitle>Transfer Your Money</CardTitle>
         <CardDescription>
-          Add money from any existing card or bank .
+          Add money from any existing card or bank.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -50,15 +66,17 @@ export function CardWithForm() {
               </Select>
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="transferedMoney">Transferd Money</Label>
+              <Label htmlFor="transferedMoney">Transferred Money</Label>
               <Input id="transferedMoney" placeholder="0$" />
             </div>
           </div>
         </form>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline">Cancel</Button>
-        <Button>Add</Button>
+        <Button variant="outline" onClick={handleCancel}>
+          Cancel
+        </Button>
+        <Button onClick={handleAdd}>Add</Button>
       </CardFooter>
     </Card>
   );
