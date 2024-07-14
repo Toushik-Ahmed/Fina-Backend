@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useState } from "react";
-import { DialogClose } from "../ui/dialog";
+} from '@/components/ui/select';
+import { useState } from 'react';
+import { DialogClose } from '../ui/dialog';
 export interface BudgetCardData {
   category: string;
   amount: number;
@@ -53,12 +53,12 @@ export function UpdateBudgetCard({
         </CardDescription>
       </CardHeader> */}
       <CardContent className="mt-4">
-        <form>
-          <div className="flex flex-col space-y-1.5">
+        <form className="">
+          <div className="flex flex-col space-y-1.5 mb-4">
             <Label htmlFor="accountType">Account Type</Label>
             <Select
               value={budgetData.category}
-              onValueChange={(val) => onValueChange("category", val)}
+              onValueChange={(val) => onValueChange('category', val)}
             >
               <SelectTrigger id="category">
                 <SelectValue placeholder="Select" />
@@ -78,7 +78,7 @@ export function UpdateBudgetCard({
               <Input
                 value={budgetData.amount}
                 onChange={(ev) => {
-                  onValueChange("amount", ev.target.value);
+                  onValueChange('amount', ev.target.value);
                 }}
                 id="amount"
                 placeholder="Amount"
@@ -88,7 +88,7 @@ export function UpdateBudgetCard({
               <Label htmlFor="budget">Budget</Label>
               <Input
                 value={budgetData.budget}
-                onChange={(ev) => onValueChange("budget", ev.target.value)}
+                onChange={(ev) => onValueChange('budget', ev.target.value)}
                 id="budget"
                 placeholder="Budget"
               />
