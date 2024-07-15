@@ -7,25 +7,41 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { addAccount } from '@/services/apiServices';
-import { useState } from 'react';
+import { addAccount, getAllAccounts } from '@/services/apiServices';
+import { useEffect, useState } from 'react';
 import { IoIosRefresh } from 'react-icons/io';
 import { IoAdd } from 'react-icons/io5';
 import { CardInfo, CardWithForm } from '../addCard/CardWithForm';
 import { Button } from '../ui/button';
+import AccountInfo from './AccountInfo';
 
 type Props = {};
 
 function Accounts({}: Props) {
+  const [accountInfo, setaccountInfo] = useState<CardInfo[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  useEffect(() => {
+    const getallaccounts = async () => {
+      try {
+        const allUsers = await getAllAccounts();
+        setaccountInfo(allUsers);
+        console.log(accountInfo);
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      }
+    };
+    getallaccounts();
+  }, []);
 
   const handleCloseForm = async (value: CardInfo) => {
     try {
       const addedAccount = await addAccount(value); // Call addAccount function with CardInfo
-      console.log('Account added:', addedAccount); // Log success or handle response
-      setDialogOpen(false); // Close the dialog after successful submission (if needed)
+      console.log('Account added:', addedAccount);
+      setaccountInfo((prevAccounts) => [...prevAccounts, addedAccount]);
+      setDialogOpen(false);
     } catch (error) {
-      console.error('Error adding account:', error); // Handle error from backend call
+      console.error('Error adding account:', error);
     }
   };
 
@@ -56,6 +72,7 @@ function Accounts({}: Props) {
             <IoIosRefresh className="h-4 w-4" />
           </Button>
         </div>
+        <AccountInfo accountInfo={accountInfo} />
         <div className="mt-5 flex flex-col items-center">
           <DialogContent>
             <DialogHeader>

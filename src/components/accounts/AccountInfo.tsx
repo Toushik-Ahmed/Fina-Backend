@@ -7,31 +7,40 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { CardInfo } from '../addCard/CardWithForm';
 
-type Props = {};
+type Props = {
+  accountInfo: CardInfo[];
+};
 
-export const AccountInfo = (props: Props) => {
+const AccountInfo = ({ accountInfo }: Props) => {
   return (
     <div>
       <Table>
-        <TableCaption>A list of your recent invoices.</TableCaption>
+        <TableCaption>All Your Account Information.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
+            <TableHead className="w-[15vw]">Account </TableHead>
+            <TableHead className="w-[15vw]">Bank</TableHead>
+            <TableHead className="w-[15vw]">Type</TableHead>
+            <TableHead className="w-[15vw]">Amount</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">INV001</TableCell>
-            <TableCell>Paid</TableCell>
-            <TableCell>Credit Card</TableCell>
-            <TableCell className="text-right">$250.00</TableCell>
-          </TableRow>
+          {accountInfo?.map((account, index) => (
+            <TableRow key={index}>
+              <TableCell className="font-medium">
+                {account.accountname}
+              </TableCell>
+              <TableCell>{account.bankname}</TableCell>
+              <TableCell>{account.accounttype}</TableCell>
+              <TableCell>${account.totalmoney.toFixed(2)}</TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>
   );
 };
+
+export default AccountInfo;
