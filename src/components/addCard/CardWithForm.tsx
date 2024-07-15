@@ -1,26 +1,26 @@
-"use client";
+'use client';
 // CardWithForm.tsx
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useState } from "react";
-import { DialogClose } from "../ui/dialog";
-import valid from "card-validator";
+} from '@/components/ui/select';
+import valid from 'card-validator';
+import { useState } from 'react';
+import { DialogClose } from '../ui/dialog';
 
 export interface CardInfo {
-  cardNumber: string;
-  bankName: string;
-  accountType: "credit" | "debit";
-  transfarredAmount: number;
+  accountname: string;
+  bankname: string;
+  accounttype: 'Credit' | 'Debit';
+  totalmoney: number;
 }
 
 type Props = {
@@ -29,10 +29,10 @@ type Props = {
 
 export function CardWithForm({ onSubmit }: Props) {
   const [cardInfo, setCardInfo] = useState<CardInfo>({
-    cardNumber: "",
-    bankName: "",
-    accountType: "credit",
-    transfarredAmount: 0,
+    accountname: '',
+    bankname: '',
+    accounttype: 'Credit',
+    totalmoney: 0,
   });
 
   const [invalidCardnumber, setInvalidCardNumber] = useState(false);
@@ -46,7 +46,7 @@ export function CardWithForm({ onSubmit }: Props) {
   };
 
   const handleAdd = () => {
-    const isCreditValid = valid.number(cardInfo.cardNumber);
+    const isCreditValid = valid.number(cardInfo.accountname);
     setInvalidCardNumber(!isCreditValid.isValid);
     if (!isCreditValid.isValid) return;
 
@@ -65,14 +65,14 @@ export function CardWithForm({ onSubmit }: Props) {
         <form>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="cardNumber">Account Name</Label>
+              <Label htmlFor="accountname">Account Name</Label>
               <Input
-                value={cardInfo.cardNumber}
+                value={cardInfo.accountname}
                 onChange={(ev) => {
-                  onValueChange("cardNumber", ev.target.value);
+                  onValueChange('accountname', ev.target.value);
                   setInvalidCardNumber(false);
                 }}
-                id="cardNumber"
+                id="accountname"
                 placeholder="Credit card-xxx"
               />
               {invalidCardnumber && (
@@ -82,21 +82,21 @@ export function CardWithForm({ onSubmit }: Props) {
               )}
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="bankName">Bank Name</Label>
+              <Label htmlFor="bankname">Bank Name</Label>
               <Input
-                value={cardInfo.bankName}
-                onChange={(ev) => onValueChange("bankName", ev.target.value)}
-                id="bankName"
+                value={cardInfo.bankname}
+                onChange={(ev) => onValueChange('bankname', ev.target.value)}
+                id="bankname"
                 placeholder="Bank name "
               />
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="accountType">Account Type</Label>
+              <Label htmlFor="accounttype">Account Type</Label>
               <Select
-                value={cardInfo.accountType}
-                onValueChange={(val) => onValueChange("accountType", val)}
+                value={cardInfo.accounttype}
+                onValueChange={(val) => onValueChange('accounttype', val)}
               >
-                <SelectTrigger id="accountType">
+                <SelectTrigger id="accounttype">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent position="popper">
@@ -109,10 +109,8 @@ export function CardWithForm({ onSubmit }: Props) {
               <Label htmlFor="transferedMoney">Transferred Money</Label>
               <Input
                 onFocus={(ev) => ev.target.select()}
-                value={cardInfo.transfarredAmount}
-                onChange={(ev) =>
-                  onValueChange("transfarredAmount", ev.target.value)
-                }
+                value={cardInfo.totalmoney}
+                onChange={(ev) => onValueChange('totalmoney', ev.target.value)}
                 id="transferedMoney"
                 placeholder="0$"
                 type="number"
