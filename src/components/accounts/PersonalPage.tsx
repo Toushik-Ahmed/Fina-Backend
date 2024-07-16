@@ -3,6 +3,7 @@ import { BiSolidCategoryAlt } from 'react-icons/bi';
 import { GrTransaction } from 'react-icons/gr';
 import { MdOutlineAccountBalance } from 'react-icons/md';
 import Accounts from './Accounts';
+import Transaction from '../transaction/Transaction';
 
 type Props = {};
 
@@ -34,7 +35,7 @@ function PersonalPage({}: Props) {
           <Accounts />
         </TabsContent>
         <TabsContent value="transaction">
-          <div>transaction tab </div>
+          <Transaction />
         </TabsContent>
         <TabsContent value="categories">Categories</TabsContent>
       </Tabs>
