@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   Dialog,
   DialogContent,
@@ -6,46 +6,78 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 // import { addtransaction, getAlltransactions } from '@/services/apiServices';
-import { useEffect, useState } from 'react';
-import { IoIosRefresh } from 'react-icons/io';
-import { IoAdd } from 'react-icons/io5';
+import { useEffect, useState } from "react";
+import { IoIosRefresh } from "react-icons/io";
+import { IoAdd } from "react-icons/io5";
 
-import { addTransaction, getAllTransaction } from '@/services/apiServices';
-import { Button } from '../ui/button';
-import TransactionInfo from './TransactionInfo';
-import { TransactionCard, TransactionCardWithForm } from './transactionCard/TransactionCard';
+import { addTransaction, getAllTransaction } from "@/services/apiServices";
+import { Button } from "../ui/button";
+import TransactionInfo from "./TransactionInfo";
+import {
+  TransactionCard,
+  TransactionCardWithForm,
+} from "./transactionCard/TransactionCard";
+import { io } from "socket.io-client";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 type Props = {};
 
 const Transaction = (props: Props) => {
   const [transactionInfo, setTransactionInfo] = useState<TransactionCard[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const getallTransactionsFn = async () => {
+    setLoading(true);
+    try {
+      const allUsers = await getAllTransaction();
+      setTransactionInfo(allUsers);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const getallTransactions = async () => {
-      try {
-        const allUsers = await getAllTransaction();
-        setTransactionInfo(allUsers);
-        console.log(transactionInfo);
-      } catch (error) {
-        console.error('Error fetching events:', error);
-      }
-    };
-    getallTransactions();
+    getallTransactionsFn();
   }, []);
+
+  useEffect(() => {
+    const socket = io(
+      process.env.NEXT_PUBLIC_BASE_URI || "http://localhost:5000",
+    );
+
+    socket.on("connected", (data) => {
+      console.log(data);
+    });
+
+    socket.on("new-transaction", () => {
+      getallTransactionsFn();
+    });
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   const handleCloseForm = async (value: TransactionCard) => {
     try {
       const addedTransaction = await addTransaction(value); // Call addTransaction function with TransactionCard
-      console.log('Transaction added:', addedTransaction);
+      console.log("Transaction added:", addedTransaction);
       setTransactionInfo((prevTransactions) => [
         ...prevTransactions,
         addedTransaction,
       ]);
       setDialogOpen(false);
     } catch (error) {
-      console.error('Error adding Transaction:', error);
+      console.error("Error adding Transaction:", error);
     }
+  };
+
+  const handleRefresh = async () => {
+    getallTransactionsFn();
   };
 
   return (
@@ -61,7 +93,7 @@ const Transaction = (props: Props) => {
           <DialogTrigger asChild>
             <Button
               variant="outline"
-              className="flex text-white hover:text-white gap-2 bg-green-500 hover:bg-green-600"
+              className="flex gap-2 bg-green-500 text-white hover:bg-green-600 hover:text-white"
             >
               <IoAdd className="h-4 w-4" /> Add transaction
             </Button>
@@ -70,12 +102,17 @@ const Transaction = (props: Props) => {
           <Button
             variant="outline"
             size="icon"
-            className="text-green-500 border-green-500 hover:text-green-500"
+            className="border-green-500 text-green-500 hover:text-green-500"
+            onClick={handleRefresh}
           >
             <IoIosRefresh className="h-4 w-4" />
           </Button>
         </div>
-        <TransactionInfo transactionInfo={transactionInfo} />
+        {loading ? (
+          <LoadingSpinner />
+        ) : (
+          <TransactionInfo transactionInfo={transactionInfo} />
+        )}
         <div className="mt-5 flex flex-col items-center">
           <DialogContent>
             <DialogHeader>

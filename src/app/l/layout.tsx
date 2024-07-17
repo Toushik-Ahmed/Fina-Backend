@@ -1,4 +1,3 @@
-import PersonalPage from "@/components/accounts/PersonalPage";
 import LeftNavbar from "@/components/shared/LeftNavbar";
 
 export default function AccountLayout({
@@ -9,7 +8,6 @@ export default function AccountLayout({
   return (
     <section className="flex">
       <LeftNavbar />
-
       <div className="nested-routes flex-grow overflow-x-auto">{children}</div>
     </section>
   );

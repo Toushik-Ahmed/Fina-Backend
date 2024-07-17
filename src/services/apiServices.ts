@@ -37,7 +37,6 @@ export const getAllTransaction = async () => {
         Authorization: `Bearer ${getToken()}`,
       },
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching accounts:', error);
