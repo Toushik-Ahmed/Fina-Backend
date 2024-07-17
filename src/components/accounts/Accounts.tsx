@@ -14,22 +14,25 @@ import { IoAdd } from "react-icons/io5";
 import { CardInfo, CardWithForm } from "../addCard/CardWithForm";
 import { Button } from "../ui/button";
 import AccountInfo from "./AccountInfo";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 type Props = {};
 
 function Accounts({}: Props) {
   const [accountInfo, setaccountInfo] = useState<CardInfo[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getallaccountsFn();
   }, []);
 
   const getallaccountsFn = async () => {
+    setLoading(true);
     try {
       const allUsers = await getAllAccounts();
       setaccountInfo(allUsers);
-      console.log(accountInfo);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching events:", error);
     }
@@ -38,7 +41,6 @@ function Accounts({}: Props) {
   const handleCloseForm = async (value: CardInfo) => {
     try {
       const addedAccount = await addAccount(value); // Call addAccount function with CardInfo
-      console.log("Account added:", addedAccount);
       setaccountInfo((prevAccounts) => [...prevAccounts, addedAccount]);
       setDialogOpen(false);
     } catch (error) {
@@ -65,7 +67,7 @@ function Accounts({}: Props) {
           <DialogTrigger asChild>
             <Button
               variant="outline"
-              className="flex text-white hover:text-white gap-2 bg-green-500 hover:bg-green-600"
+              className="flex gap-2 bg-green-500 text-white hover:bg-green-600 hover:text-white"
             >
               <IoAdd className="h-4 w-4" /> Add Account
             </Button>
@@ -74,13 +76,17 @@ function Accounts({}: Props) {
           <Button
             variant="outline"
             size="icon"
-            className="text-green-500 border-green-500 hover:text-green-500"
+            className="border-green-500 text-green-500 hover:text-green-500"
             onClick={handleRefresh}
           >
             <IoIosRefresh className="h-4 w-4" />
           </Button>
         </div>
-        <AccountInfo accountInfo={accountInfo} />
+        {loading ? (
+          <LoadingSpinner />
+        ) : (
+          <AccountInfo accountInfo={accountInfo} />
+        )}
         <div className="mt-5 flex flex-col items-center">
           <DialogContent>
             <DialogHeader>
