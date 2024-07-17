@@ -35,7 +35,7 @@ const TransactionInfo = ({ transactionInfo }: Props) => {
 
               <TableCell>{transaction.type}</TableCell>
               <TableCell>${transaction.amount}</TableCell>
-              <TableCell>${transaction.category}</TableCell>
+              <TableCell>{transaction.category}</TableCell>
             </TableRow>
           ))}
         </TableBody>

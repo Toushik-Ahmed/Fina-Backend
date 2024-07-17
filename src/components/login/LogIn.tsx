@@ -45,7 +45,13 @@ function LogIn({}: Props) {
       <div className="text-center p-[4vh]">
         <div className="flex flex-col items-center">
           <div className="flex items-center justify-center mb-[1vh] gap-2">
-            <Image width={64} height={64} src={logo} alt="Fina Logo" className="rounded" />
+            <Image
+              width={64}
+              height={64}
+              src={logo}
+              alt="Fina Logo"
+              className="rounded"
+            />
             <div>
               <div className="text-4xl font-sans font-bold text-green-400 flex">
                 Fina
@@ -118,7 +124,7 @@ function LogIn({}: Props) {
             </Link>
           </div>
           <div className="text-slate-400 text-sm mt-[2vh]">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/signup" className="text-green-400 underline">
               Create one
             </Link>

@@ -6,8 +6,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { CardInfo } from '../addCard/CardWithForm';
+} from "@/components/ui/table";
+import { CardInfo } from "../addCard/CardWithForm";
 
 type Props = {
   accountInfo: CardInfo[];
@@ -23,7 +23,7 @@ const AccountInfo = ({ accountInfo }: Props) => {
             <TableHead className="w-[15vw]">Account </TableHead>
             <TableHead className="w-[15vw]">Bank</TableHead>
             <TableHead className="w-[15vw]">Type</TableHead>
-            <TableHead className="w-[15vw]">Amount</TableHead>
+            <TableHead className="w-fit-content">Amount</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -34,7 +34,10 @@ const AccountInfo = ({ accountInfo }: Props) => {
               </TableCell>
               <TableCell>{account.bankname}</TableCell>
               <TableCell>{account.accounttype}</TableCell>
-              <TableCell>${account.totalmoney.toFixed(2)}</TableCell>
+              <TableCell className="flex justify-between">
+                <div>$</div>
+                {account.totalmoney.toFixed(2)}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
