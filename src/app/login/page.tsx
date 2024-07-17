@@ -1,5 +1,5 @@
-'use client'
-import LogIn from '@/components/login/LogIn';
+"use client";
+import LogIn from "@/components/login/LogIn";
 
 type Props = {};
 
