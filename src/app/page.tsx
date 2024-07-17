@@ -12,7 +12,7 @@ type Props = {};
 const page = (props: Props) => {
   return (
     <div className="h-fit bg-[#0f1111] p-4">
-      <div className="fixed left-0 right-0 top-0 flex items-start justify-between bg-transparent p-4 backdrop-blur-[2px]">
+      <div className="fixed left-0 right-0 top-0 z-10 flex items-start justify-between bg-transparent p-4 backdrop-blur-[2px]">
         <div className="flex items-center gap-2">
           <Image
             width={64}
@@ -55,13 +55,13 @@ const page = (props: Props) => {
             Build Your Own Tracking System
           </div>
           <Image
-            className="lg absolute left-[5vw] top-full lg:left-[22vw]"
+            className="absolute left-[5vw] top-full lg:left-[22vw]"
             src={heroLeft}
             width={207}
             alt="none"
           />
           <Image
-            className="lg absolute right-[5vw] top-full lg:right-[20vw]"
+            className="absolute right-[5vw] top-full lg:right-[20vw]"
             src={heroRight}
             width={280}
             alt="none"
