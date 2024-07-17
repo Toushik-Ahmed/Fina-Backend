@@ -12,9 +12,9 @@ import { useEffect, useState } from "react";
 import { IoIosRefresh } from "react-icons/io";
 import { IoAdd } from "react-icons/io5";
 import { CardInfo, CardWithForm } from "../addCard/CardWithForm";
+import LoadingSpinner from "../common/LoadingSpinner";
 import { Button } from "../ui/button";
 import AccountInfo from "./AccountInfo";
-import LoadingSpinner from "../common/LoadingSpinner";
 
 type Props = {};
 
@@ -35,6 +35,7 @@ function Accounts({}: Props) {
       setLoading(false);
     } catch (error) {
       console.error("Error fetching events:", error);
+      setLoading(false);
     }
   };
 
@@ -49,10 +50,9 @@ function Accounts({}: Props) {
   };
 
   const handleRefresh = async () => {
-    // setaccountInfo([]);
-    // setTimeout(() => getallaccountsFn(), 200);
     getallaccountsFn();
   };
+
 
   return (
     <div>

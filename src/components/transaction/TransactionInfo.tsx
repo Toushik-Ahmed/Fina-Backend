@@ -22,7 +22,7 @@ const TransactionInfo = ({ transactionInfo }: Props) => {
           <TableRow>
             <TableHead className="w-[15vw]">Merchant Id </TableHead>
             <TableHead className="w-[15vw]">Type</TableHead>
-            <TableHead className="w-[15vw]">amount</TableHead>
+            <TableHead className="w-[15vw]">Amount</TableHead>
             <TableHead className="w-[15vw]">Category</TableHead>
           </TableRow>
         </TableHeader>
