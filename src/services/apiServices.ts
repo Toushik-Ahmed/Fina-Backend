@@ -1,7 +1,9 @@
-import { CardInfo } from '@/components/addCard/CardWithForm';
-import { TransactionCard } from '@/components/transaction/transactionCard/TransactionCard';
-import axios from 'axios';
-import { getToken } from './TokenService';
+import { CardInfo } from "@/components/addCard/CardWithForm";
+import { BudgetCard } from "@/components/budgets/BudgetCard";
+import { MerchantCard } from "@/components/marchent/MarchentCard";
+import { TransactionCard } from "@/components/transaction/transactionCard/TransactionCard";
+import axios from "axios";
+import { getToken } from "./TokenService";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URI;
 
 //for Accounts
@@ -23,7 +25,7 @@ export const getAllAccounts = async () => {
     });
     return response.data;
   } catch (error) {
-    console.error('Error fetching accounts:', error);
+    console.error("Error fetching accounts:", error);
     throw error;
   }
 };
@@ -32,14 +34,14 @@ export const getAllAccounts = async () => {
 
 export const getAllTransaction = async () => {
   try {
-    const response = await axios.get(`${baseUrl}/transaction/getaAll`, {
+    const response = await axios.get(`${baseUrl}/transaction/getAll`, {
       headers: {
         Authorization: `Bearer ${getToken()}`,
       },
     });
     return response.data;
   } catch (error) {
-    console.error('Error fetching accounts:', error);
+    console.error("Error fetching accounts:", error);
     throw error;
   }
 };
@@ -52,4 +54,55 @@ export const addTransaction = async (data: TransactionCard) => {
   });
   console.log();
   return add.data;
+};
+
+//for merchants
+
+export const addMerchant = async (data: MerchantCard) => {
+  const add = await axios.post(`${baseUrl}/merchants/add`, data, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  console.log();
+  return add.data;
+};
+
+export const getAllMerchants = async () => {
+  try {
+    const response = await axios.get(`${baseUrl}/merchants/getAll`, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching accounts:", error);
+    throw error;
+  }
+};
+
+//for budgets
+export const addBudget = async (data: BudgetCard) => {
+  const add = await axios.post(`${baseUrl}/budget/addBudget`, data, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  console.log();
+  return add.data;
+};
+
+export const getAllBudget = async () => {
+  try {
+    const response = await axios.get(`${baseUrl}/budget/getBudget`, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching accounts:", error);
+    throw error;
+  }
 };

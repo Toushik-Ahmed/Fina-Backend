@@ -1,8 +1,18 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverClose,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { getCurrentUserData, User } from "@/services/authServices";
+import { removeToken } from "@/services/TokenService";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { CgProfile } from "react-icons/cg";
+import { CiLogout } from "react-icons/ci";
 import {
   FaBalanceScale,
   FaChartLine,
@@ -10,22 +20,12 @@ import {
   FaUser,
 } from "react-icons/fa";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
-import { CgProfile } from "react-icons/cg";
-import { Button } from "@/components/ui/button";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { CiLogout } from "react-icons/ci";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  PopoverClose
-} from "@/components/ui/popover";
-import { removeToken } from "@/services/TokenService";
 
 type Props = {};
 
 function LeftNavbar({}: Props) {
-  const router = useRouter()
+  const router = useRouter();
   const currentPath = usePathname();
   const [user, setUser] = useState<User>();
 
@@ -43,16 +43,16 @@ function LeftNavbar({}: Props) {
 
   const handleLogout = () => {
     removeToken();
-    router.push('/login')
-  }
+    router.push("/login");
+  };
 
   return (
-    <div className="bg-gray-800 h-[100vh] sticky top-[0px] w-[300px] flex-shrink-0">
+    <div className="sticky top-[0px] h-[100vh] w-[300px] flex-shrink-0 bg-gray-800">
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant={"ghost"} className="w-full mt-2">
-            <div className="flex justify-between items-center w-full">
-              <div className="flex  items-center">
+          <Button variant={"ghost"} className="mt-2 w-full">
+            <div className="flex w-full items-center justify-between">
+              <div className="flex items-center">
                 <CgProfile className="mr-2 h-4 w-4" />
                 {user?.username || "Loading..."}
               </div>
@@ -60,19 +60,19 @@ function LeftNavbar({}: Props) {
             </div>
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[300px] bg-white text-white p-0">
+        <PopoverContent className="w-[300px] bg-white p-0 text-white">
           <PopoverClose asChild>
-            <Button variant={"ghost"} className="w-full " onClick={handleLogout}>
-              <div className=" text-red-600 flex gap-2 items-center" >
-                <CiLogout className="w-4 h-4" /> Logout
+            <Button variant={"ghost"} className="w-full" onClick={handleLogout}>
+              <div className="flex items-center gap-2 text-red-600">
+                <CiLogout className="h-4 w-4" /> Logout
               </div>
             </Button>
           </PopoverClose>
         </PopoverContent>
       </Popover>
 
-      <ul className="mt-16 text-white font-bold">
-        <li className="mb-[2vh] rounded hover:shadow hover:bg-green-600 ease-in-out duration-300 ">
+      <ul className="mt-16 font-bold text-white">
+        <li className="mb-[2vh] rounded duration-300 ease-in-out hover:bg-green-600 hover:shadow">
           <Link
             href="/l/accounts"
             className={
@@ -80,11 +80,11 @@ function LeftNavbar({}: Props) {
               (currentPath === "/l/accounts" ? "bg-white text-black" : "")
             }
           >
-            <MdOutlineSpaceDashboard className="inline-block w-[2vw] h-[2vh] mr-[1vw]" />
+            <MdOutlineSpaceDashboard className="mr-[1vw] inline-block h-[2vh] w-[2vw]" />
             Dashboard
           </Link>
         </li>
-        <li className="mb-[2vh] rounded hover:shadow hover:bg-green-600 ease-in-out duration-300 ">
+        <li className="mb-[2vh] rounded duration-300 ease-in-out hover:bg-green-600 hover:shadow">
           <Link
             href="/l/personal"
             className={
@@ -92,11 +92,11 @@ function LeftNavbar({}: Props) {
               (currentPath === "/l/personal" ? "bg-white text-black" : "")
             }
           >
-            <FaUser className="inline-block w-[2vw] h-[2vh] mr-[1vw]" />
+            <FaUser className="mr-[1vw] inline-block h-[2vh] w-[2vw]" />
             Personal
           </Link>
         </li>
-        <li className="mb-[2vh] rounded hover:shadow hover:bg-green-600 ease-in-out duration-300 ">
+        <li className="mb-[2vh] rounded duration-300 ease-in-out hover:bg-green-600 hover:shadow">
           <Link
             href="/l/basicBudgeting"
             className={
@@ -104,11 +104,11 @@ function LeftNavbar({}: Props) {
               (currentPath === "/l/basicBudgeting" ? "bg-white text-black" : "")
             }
           >
-            <FaMoneyBill className="inline-block w-[2vw] h-[2vh] mr-[1vw]" />
+            <FaMoneyBill className="mr-[1vw] inline-block h-[2vh] w-[2vw]" />
             Basic Budgeting
           </Link>
         </li>
-        <li className="mb-[2vh] rounded hover:shadow hover:bg-green-600 ease-in-out duration-300 ">
+        <li className="mb-[2vh] rounded duration-300 ease-in-out hover:bg-green-600 hover:shadow">
           <Link
             href="/l/cashOverFlow"
             className={
@@ -116,11 +116,12 @@ function LeftNavbar({}: Props) {
               (currentPath === "/l/cashOverFlow" ? "bg-white text-black" : "")
             }
           >
-            <FaChartLine className="inline-block w-[2vw] h-[2vh] mr-[1vw]" />
+            <FaChartLine className="mr-[1vw] inline-block h-[2vh] w-[2vw]" />
             Basic Cashflow Overflow
           </Link>
         </li>
-        <li className="mb-[2vh] rounded hover:shadow hover:bg-green-600 ease-in-out duration-300">
+
+        <li className="mb-[2vh] rounded duration-300 ease-in-out hover:bg-green-600 hover:shadow">
           <Link
             href="/l/netWorth"
             className={
@@ -128,7 +129,7 @@ function LeftNavbar({}: Props) {
               (currentPath === "/l/netWorth" ? "bg-white text-black" : "")
             }
           >
-            <FaBalanceScale className="inline-block w-[2vw] h-[2vh] mr-[1vw]" />
+            <FaBalanceScale className="mr-[1vw] inline-block h-[2vh] w-[2vw]" />
             Net Worth Overview
           </Link>
         </li>

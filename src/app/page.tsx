@@ -1,11 +1,13 @@
+import AccordionComp from "@/components/accordion/Accordion";
 import HomePage from "@/components/homepage/HomePage";
+import MyMarqueeComponent from "@/components/marquee/Marquee";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { IoIosRocket } from "react-icons/io";
-import Logo from "../assets/logo.png";
 import heroLeft from "../assets/hero-left.svg";
 import heroRight from "../assets/hero-right.svg";
+import Logo from "../assets/logo.png";
 
 type Props = {};
 
@@ -82,7 +84,8 @@ const page = (props: Props) => {
           </div>
         </div>
       </div>
-      <div className="mb-[5vh] mt-[10vh] flex items-center justify-center">
+      <MyMarqueeComponent />
+      <div className="mb-[5vh] mt-[8vh] flex items-center justify-center">
         <div className="flex-col space-y-4 rounded-2xl p-1 text-center lg:max-w-[50vw]">
           <div className="text-xl font-medium text-[#3ef194]">How It Works</div>
           <div className="text-6xl text-white">Enjoy Peace Of Mind</div>
@@ -174,18 +177,21 @@ const page = (props: Props) => {
           <div className="flex justify-between gap-10 text-white">
             <div className="rounded bg-white p-4 text-black hover:shadow-md hover:shadow-indigo-500">
               <div className="text-2xl font-bold">
-                Unlimited Custom Categories
+                Set categories by tranasction.
               </div>
 
               <div className="mt-4">
-                Create as many categories as you need! Don't worry, we have
-                emojis to give them some flare
+                Create as many categories as you need! Based on these categories
+                you will be able to keep track your money.Based on categories
+                you can set your budget.It's very easy to create categories and
+                budgets.
               </div>
             </div>
 
             <div className="rounded bg-white p-4 text-black hover:shadow-md hover:shadow-indigo-500">
               <div className="text-2xl font-bold">
-                Flexible Budgeting & Scenario Planning
+                There are various type of charts also which can help you to
+                understand the flow .
               </div>
 
               <div className="mt-4">
@@ -268,6 +274,19 @@ const page = (props: Props) => {
                 <div>@tommyguta</div>
                 {/* </div> */}
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex items-center justify-center">
+        <div className="w-fit flex-col p-10 text-center">
+          <div className="text-xl font-medium text-[#3ef194]">FAQ'S</div>
+          <div className="mt-[6vh]">
+            <div className="text-4xl font-bold text-white">
+              Got Any Questions?
+            </div>
+            <div className="mt-[6vh] flex max-w-[30vw] items-center justify-center bg-white p-4 text-center text-black">
+              <AccordionComp />
             </div>
           </div>
         </div>
