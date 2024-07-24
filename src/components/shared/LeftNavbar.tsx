@@ -47,7 +47,7 @@ function LeftNavbar({}: Props) {
   };
 
   return (
-    <div className="sticky top-[0px] h-[100vh] w-[300px] flex-shrink-0 bg-gray-800">
+    <div className="sticky top-[0px] h-[100vh] w-[300px] flex-shrink-0 bg-[#0f1111]">
       <Popover>
         <PopoverTrigger asChild>
           <Button variant={"ghost"} className="mt-2 w-full">
