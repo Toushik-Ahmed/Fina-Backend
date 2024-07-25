@@ -129,9 +129,7 @@ const Budget = () => {
           budgetInfo={budgetInfo}
           onEdit={handleEdit}
           onDelete={handleDelete}
-          onRefresh={function (): void {
-            throw new Error("Function not implemented.");
-          }}
+          onRefresh={handleRefresh}
         />
       )}
     </div>
