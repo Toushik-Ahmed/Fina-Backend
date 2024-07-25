@@ -1,101 +1,136 @@
 "use client";
+
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-
-import { addBudget, getAllBudget } from "@/services/apiServices";
+import {
+  addBudget,
+  deleteBudget,
+  getAllBudget,
+  updateBudget,
+} from "@/services/apiServices";
 import { useEffect, useState } from "react";
 import { IoIosRefresh } from "react-icons/io";
 import { IoAdd } from "react-icons/io5";
 import LoadingSpinner from "../common/LoadingSpinner";
 import { Button } from "../ui/button";
-
-import { BudgetCard, BudgetCardWithForm } from "./BudgetCard";
+import { BudgetCard } from "./BudgetCard";
 import BudgetInfo from "./BudgetInfo";
 
-type Props = {};
-
-const Budget = (props: Props) => {
+const Budget = () => {
   const [budgetInfo, setBudgetInfo] = useState<BudgetCard[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [editData, setEditData] = useState<BudgetCard | null>(null);
 
   const getallBudgetsFn = async () => {
     setLoading(true);
     try {
-      const allBudegts = await getAllBudget();
-      setBudgetInfo(allBudegts);
-      setLoading(false);
+      const allBudgets = await getAllBudget();
+      setBudgetInfo(allBudgets);
     } catch (error) {
-      console.error("Error fetching events:", error);
+      console.error("Error fetching budgets:", error);
+    } finally {
       setLoading(false);
-    }
-  };
-  useEffect(() => {
-    getallBudgetsFn();
-  }, []);
-  const handleCloseForm = async (value: BudgetCard) => {
-    console.log("budgets value:" + value.budget + value.category);
-    try {
-      const addedBudget = await addBudget(value);
-      console.log(addedBudget);
-      setBudgetInfo((prevBudgets) => [...prevBudgets, addedBudget]);
-      console.log(budgetInfo);
-      setDialogOpen(false);
-    } catch (error) {
-      console.error("Error adding Budgets:", error);
     }
   };
 
-  const handleRefresh = async () => {
+  useEffect(() => {
     getallBudgetsFn();
+  }, []);
+
+  const handleCloseForm = async (value: BudgetCard) => {
+    try {
+      if (editData) {
+        // Update the budget if editData exists
+        await updateBudget(value.id!, value); // Ensure `id` is not undefined
+      } else {
+        // Add the budget if editData does not exist
+        await addBudget(value);
+      }
+      setBudgetInfo((prevBudgets) =>
+        editData
+          ? prevBudgets.map((b) => (b.id === value.id ? value : b))
+          : [...prevBudgets, value],
+      );
+      setDialogOpen(false);
+      setEditData(null);
+    } catch (error) {
+      console.error("Error saving budget:", error);
+    }
+  };
+
+  const handleRefresh = () => {
+    getallBudgetsFn();
+  };
+
+  const handleEdit = (budget: BudgetCard) => {
+    setEditData(budget);
+    setDialogOpen(true);
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteBudget(id);
+      setBudgetInfo((prevBudgets) => prevBudgets.filter((b) => b.id !== id));
+    } catch (error) {
+      console.error("Error deleting budget:", error);
+    }
   };
 
   return (
     <div>
-      <Dialog
-        open={dialogOpen}
-        onOpenChange={(ev) => {
-          setDialogOpen(ev);
-          console.log(ev);
-        }}
-      >
-        <div className="flex justify-end gap-2">
-          <DialogTrigger asChild>
-            <Button
-              variant="outline"
-              className="flex gap-2 bg-green-500 text-white hover:bg-green-600 hover:text-white"
-            >
-              <IoAdd className="h-4 w-4" /> Add Budget
-            </Button>
-          </DialogTrigger>
-
-          <Button
-            variant="outline"
-            size="icon"
-            className="border-green-500 text-green-500 hover:text-green-500"
-            onClick={handleRefresh}
-          >
-            <IoIosRefresh className="h-4 w-4" />
-          </Button>
-        </div>
-        {loading ? <LoadingSpinner /> : <BudgetInfo budgetInfo={budgetInfo} />}
-        <div className="mt-5 flex flex-col items-center">
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle className="mb-2">Add Budget</DialogTitle>
-              <DialogDescription asChild>
-                <BudgetCardWithForm onSubmit={handleCloseForm} />
-              </DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </div>
+      <Dialog open={dialogOpen} onOpenChange={(ev) => setDialogOpen(ev)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="mb-2">
+              {editData ? "Edit Budget" : "Add Budget"}
+            </DialogTitle>
+            <DialogDescription>
+              <BudgetCard
+                onSubmit={handleCloseForm}
+                initialData={editData || { category: "", budget: 0 }} // Pass edit data or default
+              />
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
       </Dialog>
+
+      <div className="mb-4 flex justify-end gap-2">
+        <Button
+          variant="outline"
+          className="flex gap-2 bg-green-500 text-white hover:bg-green-600 hover:text-white"
+          onClick={() => setDialogOpen(true)}
+        >
+          <IoAdd className="h-4 w-4" /> Add Budget
+        </Button>
+
+        <Button
+          variant="outline"
+          size="icon"
+          className="border-green-500 text-green-500 hover:text-green-500"
+          onClick={handleRefresh}
+        >
+          <IoIosRefresh className="h-4 w-4" />
+        </Button>
+      </div>
+
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <BudgetInfo
+          budgetInfo={budgetInfo}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onRefresh={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
+      )}
     </div>
   );
 };

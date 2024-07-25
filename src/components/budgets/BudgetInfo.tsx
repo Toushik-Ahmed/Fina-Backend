@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -11,24 +12,55 @@ import { BudgetCard } from "./BudgetCard";
 
 type Props = {
   budgetInfo: BudgetCard[];
+  onEdit: (budget: BudgetCard) => void;
+  onDelete: (id: number) => void; // Add the onDelete prop
+  onRefresh: () => void;
 };
 
-const BudgetInfo = ({ budgetInfo }: Props) => {
+const BudgetInfo = ({ budgetInfo, onEdit, onDelete, onRefresh }: Props) => {
+  const handleEdit = (budget: BudgetCard) => {
+    onEdit(budget);
+  };
+
+  const handleDelete = (id: number) => {
+    onDelete(id);
+  };
+
   return (
     <div>
       <Table>
-        <TableCaption>All Your budget Information.</TableCaption>
+        <TableCaption>All Your Budget Information.</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[15vw]">Category</TableHead>
             <TableHead className="w-[15vw]">Budget</TableHead>
+            <TableHead className="w-[15vw]">Edit</TableHead>
+            <TableHead className="w-[15vw]">Delete</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {budgetInfo?.map((budget, index) => (
-            <TableRow key={index}>
+          {budgetInfo?.map((budget) => (
+            <TableRow key={budget.id}>
               <TableCell className="font-medium">{budget.category}</TableCell>
               <TableCell>{budget.budget}</TableCell>
+              <TableCell>
+                <Button
+                  variant="outline"
+                  className="bg-gray-500"
+                  onClick={() => handleEdit(budget)}
+                >
+                  Edit
+                </Button>
+              </TableCell>
+              <TableCell>
+                <Button
+                  variant="outline"
+                  className="bg-red-600"
+                  onClick={() => handleDelete(budget.id!)} // Ensure id is not undefined
+                >
+                  Delete
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

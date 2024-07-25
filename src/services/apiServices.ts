@@ -106,3 +106,30 @@ export const getAllBudget = async () => {
     throw error;
   }
 };
+
+export const deleteBudget = async (id: number) => {
+  try {
+    await axios.delete(`${baseUrl}/budget/deleteBudget/${id}`, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
+  } catch (error) {
+    console.error("Error deleting budget:", error);
+    throw error;
+  }
+};
+
+export const updateBudget = async (id: number, data: BudgetCard) => {
+  try {
+    const updatedBudget = await axios.put(`${baseUrl}/budget/updateBudget/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
+    return updatedBudget.data;
+  } catch (error) {
+    console.error("Error updating budget:", error);
+    throw error;
+  }
+};

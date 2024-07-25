@@ -1,30 +1,35 @@
-"use client";
-// BudgetCardWithForm.tsx
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface BudgetCard {
+  id?: number; // Add id for editing
   category: string;
   budget: number;
 }
 
 type Props = {
-  onSubmit: (val: BudgetCard) => void; // Callback to close the form
+  onSubmit: (val: BudgetCard) => void; // Callback to handle submit
+  initialData?: BudgetCard | null; // Allow initialData to be null
 };
 
-export function BudgetCardWithForm({ onSubmit }: Props) {
+export function BudgetCard({ onSubmit, initialData }: Props) {
   const [cardInfo, setCardInfo] = useState<BudgetCard>({
     category: "",
     budget: 0,
+    id: undefined, // Initialize id if provided
   });
 
+  useEffect(() => {
+    if (initialData) {
+      setCardInfo(initialData); // Populate form with initial data
+    }
+  }, [initialData]);
+
   const onValueChange = (key: keyof BudgetCard, value: any) => {
-    console.log(key, value);
     setCardInfo({
       ...cardInfo,
       [key]: value,
@@ -32,33 +37,14 @@ export function BudgetCardWithForm({ onSubmit }: Props) {
   };
 
   const handleAdd = () => {
-    console.log(cardInfo);
     onSubmit(cardInfo);
   };
 
   return (
     <Card className="w-full">
-      {/* <CardHeader className="text-center">
-        <CardTitle>Transfer Your Money</CardTitle>
-        <CardDescription>
-          Add money from any existing card or bank.
-        </CardDescription>
-      </CardHeader> */}
       <CardContent className="mt-4">
         <form>
           <div className="grid w-full items-center gap-4">
-            {/* <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="merchantId">Merchant Id</Label>
-              <Input
-                value={cardInfo.merchantName}
-                onChange={(ev) => {
-                  onValueChange('merchantName', ev.target.value);
-                }}
-                id="merchantId"
-                placeholder="Merchant Id"
-              />
-            </div> */}
-
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="category">Category</Label>
               <Input
@@ -71,6 +57,7 @@ export function BudgetCardWithForm({ onSubmit }: Props) {
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="budget">Budget</Label>
               <Input
+                type="number"
                 value={cardInfo.budget}
                 onChange={(ev) => onValueChange("budget", ev.target.value)}
                 id="budget"
@@ -83,7 +70,7 @@ export function BudgetCardWithForm({ onSubmit }: Props) {
         <DialogClose asChild>
           <Button variant="outline">Cancel</Button>
         </DialogClose>
-        <Button onClick={handleAdd}>Add</Button>
+        <Button onClick={handleAdd}>Save</Button>
       </CardFooter>
     </Card>
   );
