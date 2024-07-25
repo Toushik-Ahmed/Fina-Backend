@@ -47,14 +47,13 @@ const Budget = () => {
     try {
       if (editData) {
         await updateBudget(value.id!, value);
+        setBudgetInfo((prevBudgets) =>
+          prevBudgets.map((b) => (b.id === value.id ? value : b)),
+        );
       } else {
-        await addBudget(value);
+        const newBudget = await addBudget(value);
+        setBudgetInfo((prevBudgets) => [...prevBudgets, newBudget]);
       }
-      setBudgetInfo((prevBudgets) =>
-        editData
-          ? prevBudgets.map((b) => (b.id === value.id ? value : b))
-          : [...prevBudgets, value],
-      );
       setDialogOpen(false);
       setEditData(null);
     } catch (error) {
@@ -73,6 +72,9 @@ const Budget = () => {
 
   const handleDelete = async (id: number) => {
     try {
+      if (typeof id !== "number" || isNaN(id)) {
+        throw new Error("Invalid budget id");
+      }
       await deleteBudget(id);
       setBudgetInfo((prevBudgets) => prevBudgets.filter((b) => b.id !== id));
     } catch (error) {
@@ -82,7 +84,7 @@ const Budget = () => {
 
   return (
     <div>
-      <Dialog open={dialogOpen} onOpenChange={(ev) => setDialogOpen(ev)}>
+      <Dialog open={dialogOpen} onOpenChange={(open) => setDialogOpen(open)}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="mb-2">
@@ -102,7 +104,10 @@ const Budget = () => {
         <Button
           variant="outline"
           className="flex gap-2 bg-green-500 text-white hover:bg-green-600 hover:text-white"
-          onClick={() => setDialogOpen(true)}
+          onClick={() => {
+            setEditData(null);
+            setDialogOpen(true);
+          }}
         >
           <IoAdd className="h-4 w-4" /> Add Budget
         </Button>

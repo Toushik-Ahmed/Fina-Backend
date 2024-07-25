@@ -25,7 +25,7 @@ export function BudgetCard({ onSubmit, initialData }: Props) {
 
   useEffect(() => {
     if (initialData) {
-      setCardInfo(initialData); 
+      setCardInfo(initialData);
     }
   }, [initialData]);
 
@@ -70,7 +70,7 @@ export function BudgetCard({ onSubmit, initialData }: Props) {
         <DialogClose asChild>
           <Button variant="outline">Cancel</Button>
         </DialogClose>
-        <Button onClick={handleAdd}>Add</Button>
+        <Button onClick={handleAdd}>Save</Button>
       </CardFooter>
     </Card>
   );
