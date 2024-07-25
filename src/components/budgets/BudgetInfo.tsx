@@ -13,7 +13,7 @@ import { BudgetCard } from "./BudgetCard";
 type Props = {
   budgetInfo: BudgetCard[];
   onEdit: (budget: BudgetCard) => void;
-  onDelete: (id: number) => void; // Add the onDelete prop
+  onDelete: (id: number) => void;
   onRefresh: () => void;
 };
 
@@ -24,6 +24,7 @@ const BudgetInfo = ({ budgetInfo, onEdit, onDelete, onRefresh }: Props) => {
 
   const handleDelete = (id: number) => {
     onDelete(id);
+    console.log(id);
   };
 
   return (
@@ -56,7 +57,7 @@ const BudgetInfo = ({ budgetInfo, onEdit, onDelete, onRefresh }: Props) => {
                 <Button
                   variant="outline"
                   className="bg-red-600"
-                  onClick={() => handleDelete(budget.id!)} // Ensure id is not undefined
+                  onClick={() => handleDelete(budget.id!)}
                 >
                   Delete
                 </Button>

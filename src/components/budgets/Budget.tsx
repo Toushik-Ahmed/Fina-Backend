@@ -46,10 +46,8 @@ const Budget = () => {
   const handleCloseForm = async (value: BudgetCard) => {
     try {
       if (editData) {
-        // Update the budget if editData exists
-        await updateBudget(value.id!, value); // Ensure `id` is not undefined
+        await updateBudget(value.id!, value);
       } else {
-        // Add the budget if editData does not exist
         await addBudget(value);
       }
       setBudgetInfo((prevBudgets) =>

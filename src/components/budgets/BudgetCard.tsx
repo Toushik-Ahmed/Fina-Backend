@@ -6,26 +6,26 @@ import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 
 export interface BudgetCard {
-  id?: number; // Add id for editing
+  id?: number;
   category: string;
   budget: number;
 }
 
 type Props = {
-  onSubmit: (val: BudgetCard) => void; // Callback to handle submit
-  initialData?: BudgetCard | null; // Allow initialData to be null
+  onSubmit: (val: BudgetCard) => void;
+  initialData?: BudgetCard | null;
 };
 
 export function BudgetCard({ onSubmit, initialData }: Props) {
   const [cardInfo, setCardInfo] = useState<BudgetCard>({
     category: "",
     budget: 0,
-    id: undefined, // Initialize id if provided
+    id: undefined,
   });
 
   useEffect(() => {
     if (initialData) {
-      setCardInfo(initialData); // Populate form with initial data
+      setCardInfo(initialData); 
     }
   }, [initialData]);
 
@@ -70,7 +70,7 @@ export function BudgetCard({ onSubmit, initialData }: Props) {
         <DialogClose asChild>
           <Button variant="outline">Cancel</Button>
         </DialogClose>
-        <Button onClick={handleAdd}>Save</Button>
+        <Button onClick={handleAdd}>Add</Button>
       </CardFooter>
     </Card>
   );
