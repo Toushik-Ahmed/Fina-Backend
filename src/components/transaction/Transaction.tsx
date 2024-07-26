@@ -8,24 +8,26 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 // import { addtransaction, getAlltransactions } from '@/services/apiServices';
+import { useBudget } from "@/context/BudgetContextType";
 import { useEffect, useState } from "react";
 import { IoIosRefresh } from "react-icons/io";
 import { IoAdd } from "react-icons/io5";
 
 import { addTransaction, getAllTransaction } from "@/services/apiServices";
+import { io } from "socket.io-client";
+import LoadingSpinner from "../common/LoadingSpinner";
 import { Button } from "../ui/button";
 import TransactionInfo from "./TransactionInfo";
 import {
   TransactionCard,
   TransactionCardWithForm,
 } from "./transactionCard/TransactionCard";
-import { io } from "socket.io-client";
-import LoadingSpinner from "../common/LoadingSpinner";
 
 type Props = {};
 
 const Transaction = (props: Props) => {
-  const [transactionInfo, setTransactionInfo] = useState<TransactionCard[]>([]);
+  // const [transactionInfo, setTransactionInfo] = useState<TransactionCard[]>([]);
+  const { transactions, setTransactions } = useBudget();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -33,7 +35,7 @@ const Transaction = (props: Props) => {
     setLoading(true);
     try {
       const allUsers = await getAllTransaction();
-      setTransactionInfo(allUsers);
+      setTransactions(allUsers);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching events:", error);
@@ -66,7 +68,7 @@ const Transaction = (props: Props) => {
     try {
       const addedTransaction = await addTransaction(value); // Call addTransaction function with TransactionCard
       console.log("Transaction added:", addedTransaction);
-      setTransactionInfo((prevTransactions) => [
+      setTransactions((prevTransactions) => [
         ...prevTransactions,
         addedTransaction,
       ]);
@@ -111,7 +113,7 @@ const Transaction = (props: Props) => {
         {loading ? (
           <LoadingSpinner />
         ) : (
-          <TransactionInfo transactionInfo={transactionInfo} />
+          <TransactionInfo transactionInfo={transactions} />
         )}
         <div className="mt-5 flex flex-col items-center">
           <DialogContent>

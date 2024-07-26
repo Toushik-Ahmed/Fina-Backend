@@ -1,25 +1,26 @@
-'use client';
+"use client";
 // TransactionCardWithForm.tsx
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { DialogClose } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { DialogClose } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { useState } from 'react';
+} from "@/components/ui/select";
+import { useState } from "react";
 
 export interface TransactionCard {
-  merchantName: string;
-  type: string;
+  merchantName?: string;
+  type?: string;
   amount: number;
   category: string;
+  merchantId?: number;
 }
 
 type Props = {
@@ -28,10 +29,10 @@ type Props = {
 
 export function TransactionCardWithForm({ onSubmit }: Props) {
   const [cardInfo, setCardInfo] = useState<TransactionCard>({
-    merchantName: '',
-    type: '',
+    merchantName: "",
+    type: "",
     amount: 0,
-    category: '',
+    category: "",
   });
 
   const onValueChange = (key: keyof TransactionCard, value: any) => {
@@ -48,7 +49,7 @@ export function TransactionCardWithForm({ onSubmit }: Props) {
   };
 
   return (
-    <Card className="w-full ">
+    <Card className="w-full">
       {/* <CardHeader className="text-center">
         <CardTitle>Transfer Your Money</CardTitle>
         <CardDescription>
@@ -73,7 +74,7 @@ export function TransactionCardWithForm({ onSubmit }: Props) {
               <Label htmlFor="marchantname">Merchant Name</Label>
               <Select
                 value={cardInfo.merchantName}
-                onValueChange={(val) => onValueChange('merchantName', val)}
+                onValueChange={(val) => onValueChange("merchantName", val)}
               >
                 <SelectTrigger id="merchantname">
                   <SelectValue placeholder="Select" />
@@ -88,7 +89,7 @@ export function TransactionCardWithForm({ onSubmit }: Props) {
               <Label htmlFor="category">Category</Label>
               <Input
                 value={cardInfo.category}
-                onChange={(ev) => onValueChange('category', ev.target.value)}
+                onChange={(ev) => onValueChange("category", ev.target.value)}
                 id="category"
                 placeholder="Enter Category"
               />
@@ -97,7 +98,7 @@ export function TransactionCardWithForm({ onSubmit }: Props) {
               <Label htmlFor="type">Type</Label>
               <Select
                 value={cardInfo.type}
-                onValueChange={(val) => onValueChange('type', val)}
+                onValueChange={(val) => onValueChange("type", val)}
               >
                 <SelectTrigger id="type">
                   <SelectValue placeholder="Select" />
@@ -113,7 +114,7 @@ export function TransactionCardWithForm({ onSubmit }: Props) {
               <Input
                 onFocus={(ev) => ev.target.select()}
                 value={cardInfo.amount}
-                onChange={(ev) => onValueChange('amount', ev.target.value)}
+                onChange={(ev) => onValueChange("amount", ev.target.value)}
                 id="amount"
                 type="number"
               />

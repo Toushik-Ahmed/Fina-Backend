@@ -1,4 +1,5 @@
 "use client";
+import { useBudget } from '@/context/BudgetContextType';
 
 import {
   Dialog,
@@ -22,7 +23,7 @@ import { BudgetCard } from "./BudgetCard";
 import BudgetInfo from "./BudgetInfo";
 
 const Budget = () => {
-  const [budgetInfo, setBudgetInfo] = useState<BudgetCard[]>([]);
+  const { budgets, setBudgets } = useBudget();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [editData, setEditData] = useState<BudgetCard | null>(null);
@@ -31,9 +32,9 @@ const Budget = () => {
     setLoading(true);
     try {
       const allBudgets = await getAllBudget();
-      setBudgetInfo(allBudgets);
+      setBudgets(allBudgets);
     } catch (error) {
-      console.error("Error fetching budgets:", error);
+      console.error('Error fetching budgets:', error);
     } finally {
       setLoading(false);
     }
@@ -47,17 +48,17 @@ const Budget = () => {
     try {
       if (editData) {
         await updateBudget(value.id!, value);
-        setBudgetInfo((prevBudgets) =>
-          prevBudgets.map((b) => (b.id === value.id ? value : b)),
+        setBudgets((prevBudgets) =>
+          prevBudgets.map((b) => (b.id === value.id ? value : b))
         );
       } else {
         const newBudget = await addBudget(value);
-        setBudgetInfo((prevBudgets) => [...prevBudgets, newBudget]);
+        setBudgets((prevBudgets) => [...prevBudgets, newBudget]);
       }
       setDialogOpen(false);
       setEditData(null);
     } catch (error) {
-      console.error("Error saving budget:", error);
+      console.error('Error saving budget:', error);
     }
   };
 
@@ -76,7 +77,7 @@ const Budget = () => {
         throw new Error("Invalid budget id");
       }
       await deleteBudget(id);
-      setBudgetInfo((prevBudgets) => prevBudgets.filter((b) => b.id !== id));
+      setBudgets((prevBudgets) => prevBudgets.filter((b) => b.id !== id));
     } catch (error) {
       console.error("Error deleting budget:", error);
     }
@@ -126,10 +127,10 @@ const Budget = () => {
         <LoadingSpinner />
       ) : (
         <BudgetInfo
-          budgetInfo={budgetInfo}
+          budgetInfo={budgets}
           onEdit={handleEdit}
           onDelete={handleDelete}
-          onRefresh={handleRefresh}
+          // onRefresh={handleRefresh}
         />
       )}
     </div>

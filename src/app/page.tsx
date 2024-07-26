@@ -8,6 +8,7 @@ import { IoIosRocket } from "react-icons/io";
 import heroLeft from "../assets/hero-left.svg";
 import heroRight from "../assets/hero-right.svg";
 import Logo from "../assets/logo.png";
+import Footer from '@/components/footer/Footer';
 
 type Props = {};
 
@@ -291,6 +292,7 @@ const page = (props: Props) => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

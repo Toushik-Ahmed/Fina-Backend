@@ -14,10 +14,10 @@ type Props = {
   budgetInfo: BudgetCard[];
   onEdit: (budget: BudgetCard) => void;
   onDelete: (id: number) => void;
-  onRefresh: () => void;
+  // onRefresh: () => void;
 };
 
-const BudgetInfo = ({ budgetInfo, onEdit, onDelete, onRefresh }: Props) => {
+const BudgetInfo = ({ budgetInfo, onEdit, onDelete }: Props) => {
   const handleEdit = (budget: BudgetCard) => {
     onEdit(budget);
   };
