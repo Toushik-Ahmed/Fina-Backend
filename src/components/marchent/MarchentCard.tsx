@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 
 export interface MerchantCard {
+  id?: number;
   merchantName: string;
   type: string;
   category: string;

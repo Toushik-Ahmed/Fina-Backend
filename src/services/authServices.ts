@@ -40,7 +40,7 @@ export const logIn = async (
   const response = await axios.post(`${baseUrl}/login`, data);
   return response.data;
 };
-
+//get current useers data
 export const getCurrentUserData = async (): Promise<User> => {
   const response = await axios.get(`${baseUrl}/getLoggedInUser`, {
     headers: {

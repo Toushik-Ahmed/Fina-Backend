@@ -1,11 +1,12 @@
 "use client";
 
+import { MerchantCard } from "@/components/marchent/MarchentCard";
 import { createContext, ReactNode, useContext, useState } from "react";
 
 interface BudgetData {
   id?: number;
   category: string;
-  amount: number;
+  amount?: number;
   budget: number;
 }
 
@@ -21,6 +22,8 @@ interface BudgetContextType {
   setBudgets: React.Dispatch<React.SetStateAction<BudgetData[]>>;
   transactions: TransactionData[];
   setTransactions: React.Dispatch<React.SetStateAction<TransactionData[]>>;
+  merchantInfo: MerchantCard[];
+  setMerchantInfo: React.Dispatch<React.SetStateAction<MerchantCard[]>>;
 }
 
 const BudgetContext = createContext<BudgetContextType | undefined>(undefined);
@@ -28,10 +31,18 @@ const BudgetContext = createContext<BudgetContextType | undefined>(undefined);
 export const BudgetProvider = ({ children }: { children: ReactNode }) => {
   const [budgets, setBudgets] = useState<BudgetData[]>([]);
   const [transactions, setTransactions] = useState<TransactionData[]>([]);
+  const [merchantInfo, setMerchantInfo] = useState<MerchantCard[]>([]);
 
   return (
     <BudgetContext.Provider
-      value={{ budgets, setBudgets, transactions, setTransactions }}
+      value={{
+        budgets,
+        setBudgets,
+        transactions,
+        setTransactions,
+        merchantInfo,
+        setMerchantInfo,
+      }}
     >
       {children}
     </BudgetContext.Provider>

@@ -6,8 +6,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { TransactionCard } from './transactionCard/TransactionCard';
+} from "@/components/ui/table";
+import { TransactionCard } from "./transactionCard/TransactionCard";
 
 type Props = {
   transactionInfo: TransactionCard[];
@@ -20,7 +20,7 @@ const TransactionInfo = ({ transactionInfo }: Props) => {
         <TableCaption>All Your Transaction Information.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[15vw]">Merchant Id </TableHead>
+            <TableHead className="w-[15vw]">Merchant Name </TableHead>
             <TableHead className="w-[15vw]">Type</TableHead>
             <TableHead className="w-[15vw]">Amount</TableHead>
             <TableHead className="w-[15vw]">Category</TableHead>

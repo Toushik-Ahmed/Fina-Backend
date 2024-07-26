@@ -9,6 +9,7 @@ export interface BudgetCard {
   id?: number;
   category: string;
   budget: number;
+  amount?: number;
 }
 
 type Props = {

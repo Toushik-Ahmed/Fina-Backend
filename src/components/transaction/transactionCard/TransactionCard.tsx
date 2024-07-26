@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useBudget } from "@/context/BudgetContextType";
 import { useState } from "react";
 
 export interface TransactionCard {
@@ -28,11 +29,14 @@ type Props = {
 };
 
 export function TransactionCardWithForm({ onSubmit }: Props) {
+  const { merchantInfo } = useBudget();
+
   const [cardInfo, setCardInfo] = useState<TransactionCard>({
     merchantName: "",
     type: "",
     amount: 0,
     category: "",
+    merchantId: undefined,
   });
 
   const onValueChange = (key: keyof TransactionCard, value: any) => {
@@ -44,34 +48,24 @@ export function TransactionCardWithForm({ onSubmit }: Props) {
   };
 
   const handleAdd = () => {
+    // Set the merchantId based on the selected merchantName
+    const selectedMerchant = merchantInfo.find(
+      (el) => el.merchantName === cardInfo.merchantName,
+    );
+    if (selectedMerchant) {
+      cardInfo.merchantId = selectedMerchant.id;
+    }
     console.log(cardInfo);
     onSubmit(cardInfo);
   };
 
   return (
     <Card className="w-full">
-      {/* <CardHeader className="text-center">
-        <CardTitle>Transfer Your Money</CardTitle>
-        <CardDescription>
-          Add money from any existing card or bank.
-        </CardDescription>
-      </CardHeader> */}
       <CardContent className="mt-4">
         <form>
           <div className="grid w-full items-center gap-4">
-            {/* <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="merchantId">Merchant Id</Label>
-              <Input
-                value={cardInfo.merchantName}
-                onChange={(ev) => {
-                  onValueChange('merchantName', ev.target.value);
-                }}
-                id="merchantId"
-                placeholder="Merchant Id"
-              />
-            </div> */}
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="marchantname">Merchant Name</Label>
+              <Label htmlFor="merchantname">Merchant Name</Label>
               <Select
                 value={cardInfo.merchantName}
                 onValueChange={(val) => onValueChange("merchantName", val)}
@@ -80,8 +74,11 @@ export function TransactionCardWithForm({ onSubmit }: Props) {
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent position="popper">
-                  <SelectItem value="arong">arong</SelectItem>
-                  <SelectItem value="wallmart">wallmart</SelectItem>
+                  {merchantInfo.map((el) => (
+                    <SelectItem key={el.id} value={el.merchantName}>
+                      {el.merchantName}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
