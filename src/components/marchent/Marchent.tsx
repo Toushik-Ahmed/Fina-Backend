@@ -8,7 +8,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 // import { addMerchant, getAllMerchants } from "@/services/apiServices";
-import { useBudget } from "@/context/BudgetContextType";
 import { addMerchant, getAllMerchants } from "@/services/apiServices";
 import { useEffect, useState } from "react";
 import { IoIosRefresh } from "react-icons/io";
@@ -21,8 +20,8 @@ import MerchantInfo from "./MerchantInfo";
 type Props = {};
 
 function Merchants({}: Props) {
-  // const [merchantInfo, setMerchantInfo] = useState<MerchantCard[]>([]);
-  const { merchantInfo, setMerchantInfo } = useBudget();
+   const [merchantInfo, setMerchantInfo] = useState<MerchantCard[]>([]);
+
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);

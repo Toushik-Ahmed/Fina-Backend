@@ -1,4 +1,5 @@
 "use client";
+import { MerchantCard } from "@/components/marchent/MarchentCard";
 // TransactionCardWithForm.tsx
 
 import { Button } from "@/components/ui/button";
@@ -13,8 +14,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useBudget } from "@/context/BudgetContextType";
-import { useState } from "react";
+import { getAllMerchants } from "@/services/apiServices";
+import { useEffect, useState } from "react";
 
 export interface TransactionCard {
   merchantName?: string;
@@ -29,7 +30,24 @@ type Props = {
 };
 
 export function TransactionCardWithForm({ onSubmit }: Props) {
-  const { merchantInfo } = useBudget();
+  const [merchantInfo, setMerchantInfo] = useState<MerchantCard[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const getallMerchantsFn = async () => {
+    setLoading(true);
+    try {
+      const allMerchants = await getAllMerchants();
+      setMerchantInfo(allMerchants);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getallMerchantsFn();
+  }, []);
 
   const [cardInfo, setCardInfo] = useState<TransactionCard>({
     merchantName: "",

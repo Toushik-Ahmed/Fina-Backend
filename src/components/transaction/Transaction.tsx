@@ -8,7 +8,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 // import { addtransaction, getAlltransactions } from '@/services/apiServices';
-import { useBudget } from "@/context/BudgetContextType";
 import { useEffect, useState } from "react";
 import { IoIosRefresh } from "react-icons/io";
 import { IoAdd } from "react-icons/io5";
@@ -26,8 +25,9 @@ import {
 type Props = {};
 
 const Transaction = (props: Props) => {
-  // const [transactionInfo, setTransactionInfo] = useState<TransactionCard[]>([]);
-  const { transactions, setTransactions } = useBudget();
+   const [transactions, setTransactions] = useState<TransactionCard[]>([]);
+  // const { transactions, setTransactions } = useBudget();
+
   const [dialogOpen, setDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 

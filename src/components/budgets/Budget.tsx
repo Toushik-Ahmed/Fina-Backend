@@ -1,5 +1,4 @@
 "use client";
-import { useBudget } from '@/context/BudgetContextType';
 
 import {
   Dialog,
@@ -23,7 +22,7 @@ import { BudgetCard } from "./BudgetCard";
 import BudgetInfo from "./BudgetInfo";
 
 const Budget = () => {
-  const { budgets, setBudgets } = useBudget();
+  const [budgets, setBudgets] = useState<BudgetCard[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [editData, setEditData] = useState<BudgetCard | null>(null);
@@ -34,7 +33,7 @@ const Budget = () => {
       const allBudgets = await getAllBudget();
       setBudgets(allBudgets);
     } catch (error) {
-      console.error('Error fetching budgets:', error);
+      console.error("Error fetching budgets:", error);
     } finally {
       setLoading(false);
     }
@@ -49,7 +48,7 @@ const Budget = () => {
       if (editData) {
         await updateBudget(value.id!, value);
         setBudgets((prevBudgets) =>
-          prevBudgets.map((b) => (b.id === value.id ? value : b))
+          prevBudgets.map((b) => (b.id === value.id ? value : b)),
         );
       } else {
         const newBudget = await addBudget(value);
@@ -58,7 +57,7 @@ const Budget = () => {
       setDialogOpen(false);
       setEditData(null);
     } catch (error) {
-      console.error('Error saving budget:', error);
+      console.error("Error saving budget:", error);
     }
   };
 
