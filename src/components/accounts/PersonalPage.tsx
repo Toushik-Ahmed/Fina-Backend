@@ -1,5 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BiSolidCategoryAlt } from "react-icons/bi";
+import { FaMoneyCheckAlt } from "react-icons/fa";
 import { GrTransaction } from "react-icons/gr";
 import { MdOutlineAccountBalance } from "react-icons/md";
 import Budget from "../budgets/Budget";
@@ -34,7 +35,7 @@ function PersonalPage({}: Props) {
           </TabsTrigger>
           <TabsTrigger asChild value="budget" className="flex-grow">
             <button className="flex items-center gap-2 border-b-2 border-solid border-transparent data-[state=active]:border-green-500">
-              <BiSolidCategoryAlt className="h-4 w-4" /> Budgets
+              <FaMoneyCheckAlt className="h-4 w-4" /> Budgets
             </button>
           </TabsTrigger>
         </TabsList>

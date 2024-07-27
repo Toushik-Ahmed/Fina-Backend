@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { CiLogout } from "react-icons/ci";
 import {
+  FaMoneyCheckAlt,
   FaBalanceScale,
   FaChartLine,
   FaMoneyBill,
@@ -117,7 +118,7 @@ function LeftNavbar({}: Props) {
             }
           >
             <FaChartLine className="mr-[1vw] inline-block h-[2vh] w-[2vw]" />
-            Basic Cashflow Overflow
+            Basic Cashflow Overview
           </Link>
         </li>
 
