@@ -1,11 +1,17 @@
-import React from 'react'
+"use client";
 
-type Props = {}
+import DailyTransaction from "./DailyTransaction";
+import WeeklyTransactionTrend from "./WeeklyTransactionTrend";
+
+type Props = {};
 
 const CashOverFlow = (props: Props) => {
   return (
-    <div>CashOverFlow</div>
-  )
-}
+    <div>
+      <DailyTransaction />
+      <WeeklyTransactionTrend />
+    </div>
+  );
+};
 
-export default CashOverFlow
+export default CashOverFlow;

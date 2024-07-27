@@ -122,14 +122,35 @@ export const deleteBudget = async (id: number) => {
 
 export const updateBudget = async (id: number, data: BudgetCard) => {
   try {
-    const updatedBudget = await axios.put(`${baseUrl}/budget/updateBudget/${id}`, data, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
+    const updatedBudget = await axios.put(
+      `${baseUrl}/budget/updateBudget/${id}`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
       },
-    });
+    );
     return updatedBudget.data;
   } catch (error) {
     console.error("Error updating budget:", error);
+    throw error;
+  }
+};
+
+export const getTransactionByDate = async (date: Date) => {
+  try {
+    const axiosResponse = await axios.get(
+      `${baseUrl}/transaction/queryByDate?date=${date.toISOString()}`,
+      {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      },
+    );
+    return axiosResponse.data;
+  } catch (error) {
+    console.error("Error getting transaction for date: ", error);
     throw error;
   }
 };
