@@ -23,6 +23,7 @@ export interface TransactionCard {
   amount: number;
   category: string;
   merchantId?: number;
+  timestamp?: string;
 }
 
 type Props = {

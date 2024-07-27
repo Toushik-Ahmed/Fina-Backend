@@ -154,3 +154,20 @@ export const getTransactionByDate = async (date: Date) => {
     throw error;
   }
 };
+
+export const getTransactionForDateRange = async (from: Date, to: Date) => {
+  try {
+    const axiosResponse = await axios.get(
+      `${baseUrl}/transaction/queryByRange?startDate=${from.toISOString()}&endDate=${to.toISOString()}`,
+      {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      },
+    );
+    return axiosResponse.data;
+  } catch (error) {
+    console.error("Error getting transaction for date: ", error);
+    throw error;
+  }
+};
