@@ -31,7 +31,9 @@ function Accounts({}: Props) {
     setLoading(true);
     try {
       const allUsers = await getAllAccounts();
+      console.log(allUsers)
       setaccountInfo(allUsers);
+
       setLoading(false);
     } catch (error) {
       console.error("Error fetching events:", error);

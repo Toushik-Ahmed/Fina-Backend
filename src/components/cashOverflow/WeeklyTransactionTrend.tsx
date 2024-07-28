@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { DateTime } from "luxon";
-import { TransactionCard } from "../transaction/transactionCard/TransactionCard";
 import { getTransactionForDateRange } from "@/services/apiServices";
+import { DateTime } from "luxon";
+import randomcolor from "randomcolor";
+import { useEffect, useState } from "react";
 import {
   CartesianGrid,
   Legend,
@@ -12,7 +12,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import randomcolor from "randomcolor";
+import { TransactionCard } from "../transaction/transactionCard/TransactionCard";
 
 interface LineChartDataForDateRange {
   [key: string]: string | number;
@@ -29,7 +29,7 @@ function WeeklyTransactionTrend() {
     const today = DateTime.now().endOf("day");
     try {
       const currentData = await getTransactionForDateRange(
-        today.minus({ day: 30 }).toJSDate(),
+        today.minus({ day: 7 }).toJSDate(),
         today.toJSDate(),
       );
       setLineChartData(transformTransactionsToLineChartData(currentData));
@@ -105,7 +105,7 @@ function WeeklyTransactionTrend() {
     getThisWeeksData();
   }, []);
   return (
-    <div className="h-[40vh] max-w-[800px]">
+    <div className="m-4 h-[40vh] w-full">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           width={500}
@@ -140,6 +140,7 @@ function WeeklyTransactionTrend() {
           })}
         </LineChart>
       </ResponsiveContainer>
+      <div className="font-bold">Weekly exnpenses By category</div>
     </div>
   );
 }
