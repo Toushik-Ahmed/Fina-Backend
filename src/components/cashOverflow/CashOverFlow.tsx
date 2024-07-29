@@ -1,5 +1,6 @@
 "use client";
 
+import BudgetGraph from "./BudgetGraph";
 import DailyTransaction from "./DailyTransaction";
 import MonthlyBudgetVsEx from "./MonthlyBudgetVsEx";
 import MonthlyTransactionTrend from "./MonthlyTransaction";
@@ -9,11 +10,12 @@ type Props = {};
 
 const CashOverFlow = (props: Props) => {
   return (
-    <div className="w-[40vw] flex flex-col gap-10">
+    <div className="flex w-[40vw] flex-col gap-10">
       <DailyTransaction />
       <WeeklyTransactionTrend />
       <MonthlyTransactionTrend />
       <MonthlyBudgetVsEx />
+      <BudgetGraph />
     </div>
   );
 };
