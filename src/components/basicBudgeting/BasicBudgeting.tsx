@@ -65,18 +65,19 @@ const BasicBudgeting = (props: Props) => {
     <div className="p-10">
       <div className="mb-8 text-white font-semibold text-xl">
         Expense vs Budget
+        <div className='text-green-300 font-medium'>Here you can keep track of your expenses and budgets of all categories </div>
       </div>
       {loading ? (
         <LoadingSpinner />
       ) : (
         <Table className="mx-auto w-[50vw]">
-          <TableCaption>Expense by Category with Budget</TableCaption>
+          <TableCaption className='text-white font-medium'>Expense by Category with Budget</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[25vw]">Category</TableHead>
-              <TableHead>Amount</TableHead>
+              <TableHead className="w-[25vw] text-white font-bold">Category</TableHead>
+              <TableHead className='text-white font-bold'>Amount</TableHead>
               <TableHead className="w-[25vw]"></TableHead>
-              <TableHead>Budget</TableHead>
+              <TableHead className='text-white font-bold'>Budget</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -89,14 +90,14 @@ const BasicBudgeting = (props: Props) => {
               return (
                 <TableRow key={idx}>
                   <TableCell className="font-medium">{val.category}</TableCell>
-                  <TableCell>{amount}$</TableCell>
+                  <TableCell>${amount}</TableCell>
                   <TableCell>
                     <Progress
                       value={progressValue}
                       indicatorColor={chooseProgressColor(progressValue)}
                     />
                   </TableCell>
-                  <TableCell className="text-right">{budget}$</TableCell>
+                  <TableCell className="text-right">${budget}</TableCell>
                 </TableRow>
               );
             })}

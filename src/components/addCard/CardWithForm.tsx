@@ -19,7 +19,7 @@ import { DialogClose } from "../ui/dialog";
 export interface CardInfo {
   accountname: string;
   bankname: string;
-  accounttype: "Credit" | "Debit";
+  accounttype: string;
   totalmoney: number;
 }
 
@@ -31,7 +31,7 @@ export function CardWithForm({ onSubmit }: Props) {
   const [cardInfo, setCardInfo] = useState<CardInfo>({
     accountname: "",
     bankname: "",
-    accounttype: "Credit",
+    accounttype: "",
     totalmoney: 0,
   });
 
@@ -46,76 +46,79 @@ export function CardWithForm({ onSubmit }: Props) {
   };
 
   const handleAdd = () => {
-    const isCreditValid = valid.number(cardInfo.accountname);
-    setInvalidCardNumber(!isCreditValid.isValid);
-    if (!isCreditValid.isValid) return;
+    if (cardInfo.accounttype === "Manual") {
+      // Set accountname and bankname to "Manual" if accounttype is "Manual"
+      cardInfo.accountname = "Manual";
+      cardInfo.bankname = "Manual";
+    } else {
+      const isCreditValid = valid.number(cardInfo.accountname);
+      setInvalidCardNumber(!isCreditValid.isValid);
+      if (!isCreditValid.isValid) return;
+    }
 
     onSubmit(cardInfo);
   };
 
   return (
-    <Card className="w-full ">
-      {/* <CardHeader className="text-center">
-        <CardTitle>Transfer Your Money</CardTitle>
-        <CardDescription>
-          Add money from any existing card or bank.
-        </CardDescription>
-      </CardHeader> */}
+    <Card className="w-full">
       <CardContent className="mt-4">
         <form>
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="accountname">Account Name</Label>
-              <Input
-                value={cardInfo.accountname}
-                onChange={(ev) => {
-                  onValueChange("accountname", ev.target.value);
-                  setInvalidCardNumber(false);
-                }}
-                id="accountname"
-                placeholder="Credit card-xxx"
-              />
-              {invalidCardnumber && (
-                <div className="ml-2 left-align text-xs text-red-500">
-                  Invalid Card Number
-                </div>
-              )}
+          <div className="mb-1.5 flex flex-col space-y-1.5">
+            <Label htmlFor="accounttype">Account Type</Label>
+            <Select
+              value={cardInfo.accounttype}
+              onValueChange={(val) => onValueChange("accounttype", val)}
+            >
+              <SelectTrigger id="accounttype">
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent position="popper">
+                <SelectItem value="Credit">Credit</SelectItem>
+                <SelectItem value="Debit">Debit</SelectItem>
+                <SelectItem value="Manual">Manual</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          {cardInfo.accounttype !== "Manual" && (
+            <div className="grid w-full items-center gap-4">
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="accountname">Account Name</Label>
+                <Input
+                  value={cardInfo.accountname}
+                  onChange={(ev) => {
+                    onValueChange("accountname", ev.target.value);
+                    setInvalidCardNumber(false);
+                  }}
+                  id="accountname"
+                  placeholder="Credit card-xxx"
+                />
+                {invalidCardnumber && (
+                  <div className="left-align ml-2 text-xs text-red-500">
+                    Invalid Card Number
+                  </div>
+                )}
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="bankname">Bank Name</Label>
+                <Input
+                  value={cardInfo.bankname}
+                  onChange={(ev) => onValueChange("bankname", ev.target.value)}
+                  id="bankname"
+                  placeholder="Bank name "
+                />
+              </div>
             </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="bankname">Bank Name</Label>
-              <Input
-                value={cardInfo.bankname}
-                onChange={(ev) => onValueChange("bankname", ev.target.value)}
-                id="bankname"
-                placeholder="Bank name "
-              />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="accounttype">Account Type</Label>
-              <Select
-                value={cardInfo.accounttype}
-                onValueChange={(val) => onValueChange("accounttype", val)}
-              >
-                <SelectTrigger id="accounttype">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent position="popper">
-                  <SelectItem value="Credit">Credit</SelectItem>
-                  <SelectItem value="Debit">Debit</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="transferedMoney">Transferred Money</Label>
-              <Input
-                onFocus={(ev) => ev.target.select()}
-                value={cardInfo.totalmoney}
-                onChange={(ev) => onValueChange("totalmoney", ev.target.value)}
-                id="transferedMoney"
-                placeholder="0$"
-                type="number"
-              />
-            </div>
+          )}{" "}
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="transferedMoney">Transferred Money</Label>
+            <Input
+              onFocus={(ev) => ev.target.select()}
+              value={cardInfo.totalmoney}
+              onChange={(ev) => onValueChange("totalmoney", ev.target.value)}
+              id="transferedMoney"
+              placeholder="0$"
+              type="number"
+            />
           </div>
         </form>
       </CardContent>

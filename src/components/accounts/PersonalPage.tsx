@@ -13,8 +13,12 @@ type Props = {};
 function PersonalPage({}: Props) {
   return (
     <div className="p-8">
-      <div className="mb-8 text-white font-semibold text-xl">
+      <div className="mb-8 text-xl font-semibold text-white">
         Personal Accounts and Transactions
+        <div className="text-lg font-normal">
+          Add money to your <span className="text-green-500">Fina</span>{" "}
+          card.You can also keep tab manually.Configure your merchants and budgets to keep track of your money.
+        </div>
       </div>
       <Tabs defaultValue="account" className="mx-auto max-w-3xl">
         <TabsList className="w-full">

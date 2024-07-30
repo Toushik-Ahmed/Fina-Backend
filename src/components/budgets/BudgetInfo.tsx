@@ -28,7 +28,7 @@ const BudgetInfo = ({ budgetInfo, onEdit, onDelete }: Props) => {
   };
 
   return (
-    <div className="m-4 rounded-lg bg-gray-900 p-6 text-white">
+    <div className="m-4 rounded-lg bg-gray-900  text-white">
       <Table>
         <TableCaption>All Your Budget Information.</TableCaption>
         <TableHeader>
@@ -39,10 +39,10 @@ const BudgetInfo = ({ budgetInfo, onEdit, onDelete }: Props) => {
             <TableHead className="w-[25%] text-right text-gray-300">
               Budget
             </TableHead>
-            <TableHead className="w-[25%] text-right text-gray-300">
+            <TableHead className="w-[25%] text-right text-gray-300 pr-8">
               Edit
             </TableHead>
-            <TableHead className="w-[25%] text-right text-gray-300">
+            <TableHead className="w-[25%] text-right text-gray-300 pr-8">
               Delete
             </TableHead>
           </TableRow>
