@@ -1,4 +1,5 @@
 import AccordionComp from "@/components/accordion/Accordion";
+import Footer from "@/components/footer/Footer";
 import HomePage from "@/components/homepage/HomePage";
 import MyMarqueeComponent from "@/components/marquee/Marquee";
 import { Button } from "@/components/ui/button";
@@ -8,13 +9,12 @@ import { IoIosRocket } from "react-icons/io";
 import heroLeft from "../assets/hero-left.svg";
 import heroRight from "../assets/hero-right.svg";
 import Logo from "../assets/logo.png";
-import Footer from '@/components/footer/Footer';
 
 type Props = {};
 
 const page = (props: Props) => {
   return (
-    <div className="h-fit bg-[#0f1111] p-4">
+    <div className="h-fit bg-[#0f1111] p-4 text-black">
       <div className="fixed left-0 right-0 top-0 z-10 flex items-start justify-between bg-transparent p-4 backdrop-blur-[2px]">
         <div className="flex items-center gap-2">
           <Image
@@ -47,7 +47,7 @@ const page = (props: Props) => {
           </Link>
         </div>
       </div>
-      <div className="h-[100vh]">
+      <div className="h-[70vh]">
         <div className="mt-[10vh] flex items-center justify-center">
           <div className="w-fit rounded-2xl border-2 border-[#3ef194] p-2 text-white">
             For those who care about their future
@@ -211,7 +211,7 @@ const page = (props: Props) => {
         id="testimonial"
         className="mb-[5vh] mt-[10vh] flex items-center justify-center"
       >
-        <div className="w-[70vw] flex-col space-y-4 rounded-2xl p-1 text-center">
+        <div className="w-[70vw] flex-col space-y-4 rounded-2xl pt-[120px] text-center">
           <div className="text-xl font-medium text-[#3ef194]">Testimonial</div>
           <div className="text-6xl text-white">
             <div>What The People Say</div>{" "}

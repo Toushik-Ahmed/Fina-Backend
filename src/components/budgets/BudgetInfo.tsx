@@ -28,23 +28,31 @@ const BudgetInfo = ({ budgetInfo, onEdit, onDelete }: Props) => {
   };
 
   return (
-    <div>
+    <div className="m-4 rounded-lg bg-gray-900 p-6 text-white">
       <Table>
         <TableCaption>All Your Budget Information.</TableCaption>
         <TableHeader>
-          <TableRow>
-            <TableHead className="w-[15vw]">Category</TableHead>
-            <TableHead className="w-[15vw]">Budget</TableHead>
-            <TableHead className="w-[15vw]">Edit</TableHead>
-            <TableHead className="w-[15vw]">Delete</TableHead>
+          <TableRow className="border-b border-gray-700">
+            <TableHead className="w-[25%] text-left text-gray-300">
+              Category
+            </TableHead>
+            <TableHead className="w-[25%] text-right text-gray-300">
+              Budget
+            </TableHead>
+            <TableHead className="w-[25%] text-right text-gray-300">
+              Edit
+            </TableHead>
+            <TableHead className="w-[25%] text-right text-gray-300">
+              Delete
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {budgetInfo?.map((budget) => (
-            <TableRow key={budget.id}>
+            <TableRow key={budget.id} className="border-b border-gray-700">
               <TableCell className="font-medium">{budget.category}</TableCell>
-              <TableCell>{budget.budget}</TableCell>
-              <TableCell>
+              <TableCell className='text-right'>${budget.budget}</TableCell>
+              <TableCell className='text-right'>
                 <Button
                   variant="outline"
                   className="bg-gray-500"
@@ -53,10 +61,10 @@ const BudgetInfo = ({ budgetInfo, onEdit, onDelete }: Props) => {
                   Edit
                 </Button>
               </TableCell>
-              <TableCell>
+              <TableCell className="text-right">
                 <Button
                   variant="outline"
-                  className="bg-red-600"
+                  className="bg-red-400"
                   onClick={() => handleDelete(budget.id!)}
                 >
                   Delete

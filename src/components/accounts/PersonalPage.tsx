@@ -13,7 +13,7 @@ type Props = {};
 function PersonalPage({}: Props) {
   return (
     <div className="p-8">
-      <div className="mb-8 text-gray-400">
+      <div className="mb-8 text-white font-semibold text-xl">
         Personal Accounts and Transactions
       </div>
       <Tabs defaultValue="account" className="mx-auto max-w-3xl">

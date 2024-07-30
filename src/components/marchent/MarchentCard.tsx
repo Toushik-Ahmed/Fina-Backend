@@ -6,6 +6,13 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useState } from "react";
 
 export interface MerchantCard {
@@ -83,12 +90,18 @@ export function MerchantCardWithForm({ onSubmit }: Props) {
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="type">Type</Label>
-              <Input
+              <Select
                 value={cardInfo.type}
-                onChange={(ev) => onValueChange("type", ev.target.value)}
-                id="type"
-                placeholder="static/auto"
-              />
+                onValueChange={(val) => onValueChange("type", val)}
+              >
+                <SelectTrigger id="type">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  <SelectItem value="card">Card</SelectItem>
+                  <SelectItem value="manual">Manual</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </form>

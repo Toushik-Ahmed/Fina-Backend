@@ -41,7 +41,7 @@ function WeeklyTransactionTrend() {
   const generateRandomColors = (ammount: number) => {
     const newColors = [];
     for (let i = 0; i < ammount; i++) {
-      newColors.push(randomcolor({ luminosity: "dark" }));
+      newColors.push(randomcolor({ luminosity: "light" }));
     }
     setUniqColorList([...newColors]);
   };
@@ -119,8 +119,8 @@ function WeeklyTransactionTrend() {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="dayname" />
-          <YAxis />
+          <XAxis stroke="white" dataKey="dayname" />
+          <YAxis stroke="white" />
           <Tooltip
             formatter={(value) => {
               return `$${value}`;
@@ -140,7 +140,7 @@ function WeeklyTransactionTrend() {
           })}
         </LineChart>
       </ResponsiveContainer>
-      <div className="font-bold">Weekly exnpenses By category</div>
+      <div className="font-bold">Last 7 day's exnpenses By category</div>
     </div>
   );
 }

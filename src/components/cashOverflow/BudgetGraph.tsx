@@ -1,11 +1,12 @@
 import { getAllBudget, getAllTransaction } from "@/services/apiServices";
+import { groupBy } from "lodash";
 import { useEffect, useState } from "react";
-import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { BudgetCard } from "../budgets/BudgetCard";
 import { TransactionCard } from "../transaction/transactionCard/TransactionCard";
 
 interface RemainingBudgetPercentage {
-  categoryName: string;
+  name: string;
   remainingPercentage: number;
 }
 
@@ -22,33 +23,6 @@ interface CustomizedLabelProps {
   percent: number;
   index: number;
 }
-
-const renderCustomizedLabel = ({
-  cx,
-  cy,
-  midAngle,
-  innerRadius,
-  outerRadius,
-  percent,
-  index,
-}: CustomizedLabelProps) => {
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-  return (
-    <text
-      x={x}
-      y={y}
-      fill="white"
-      textAnchor="middle"
-      dominantBaseline="central"
-      style={{ fontSize: "12px", fontWeight: "bold" }}
-    >
-      {`${(percent * 100).toFixed(0)}%`}
-    </text>
-  );
-};
 
 function BudgetGraph() {
   const [budget, setBudget] = useState<BudgetCard[]>([]);
@@ -81,14 +55,13 @@ function BudgetGraph() {
       },
       {},
     );
-
+    const totalBudget = budgets.reduce((acc, curr) => acc + curr.budget, 0);
     return budgets.map((budget) => {
       const spentAmount = transactionAmounts[budget.category] || 0;
-      const remainingPercentage =
-        ((budget.budget - spentAmount) / budget.budget) * 100;
+      const remainingPercentage = (spentAmount / totalBudget) * 100;
       return {
-        categoryName: budget.category,
-        remainingPercentage: Math.max(remainingPercentage, 0), // Ensure no negative values
+        name: budget.category,
+        remainingPercentage: Math.trunc(Math.max(remainingPercentage, 0)), // Ensure no negative values
       };
     });
   };
@@ -103,9 +76,66 @@ function BudgetGraph() {
         budget,
         transaction,
       );
-      setRemainingBudgetPercentage(remainingPercentages);
+      const groupByPecentage = groupBy(
+        remainingPercentages,
+        "remainingPercentage",
+      );
+      const uniqueValues: RemainingBudgetPercentage[] = Object.entries(
+        groupByPecentage,
+      ).map(([val, items]) => {
+        return {
+          name: items.map((el) => el.name).join(" & "),
+          remainingPercentage: items.reduce(
+            (acc, curr) => acc + curr.remainingPercentage,
+            0,
+          ),
+        };
+      });
+      const spentPercentage = uniqueValues.reduce(
+        (acc, curr) => acc + curr.remainingPercentage,
+        0,
+      );
+      if (100 - spentPercentage > 0) {
+        uniqueValues.push({
+          name: "Unspent Amount",
+          remainingPercentage: 100 - spentPercentage,
+        });
+      }
+      setRemainingBudgetPercentage(uniqueValues);
     }
   }, [budget, transaction]);
+
+  const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+    index,
+  }: CustomizedLabelProps) => {
+    const radius =
+      outerRadius +
+      ((midAngle > 60 && midAngle < 120) || (midAngle > 240 && midAngle < 300)
+        ? 20
+        : 80);
+
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor="middle"
+        dominantBaseline="central"
+        style={{ fontSize: "12px", fontWeight: "bold" }}
+      >
+        {`${remainingBudgetPercentage[index].name}: ${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
 
   return (
     <div className="h-[40vh] w-full">
@@ -128,8 +158,12 @@ function BudgetGraph() {
               />
             ))}
           </Pie>
+          <Tooltip />
         </PieChart>
       </ResponsiveContainer>
+      <div className="font-bold">
+        Overview of total remaining budget & spent categories
+      </div>
     </div>
   );
 }

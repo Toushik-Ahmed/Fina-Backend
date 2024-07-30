@@ -9,7 +9,7 @@ type Props = {};
 
 const AccordionComp = (props: Props) => {
   return (
-    <div>
+    <div className="w-[600px]">
       <Accordion type="single" collapsible>
         <AccordionItem value="item-1">
           <AccordionTrigger>

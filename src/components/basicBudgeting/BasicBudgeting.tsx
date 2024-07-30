@@ -63,8 +63,8 @@ const BasicBudgeting = (props: Props) => {
 
   return (
     <div className="p-10">
-      <div className="mb-8 font-bold text-slate-800">
-        Budget vs Expense Chart
+      <div className="mb-8 text-white font-semibold text-xl">
+        Expense vs Budget
       </div>
       {loading ? (
         <LoadingSpinner />

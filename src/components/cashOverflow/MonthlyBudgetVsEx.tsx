@@ -78,8 +78,8 @@ function MonthlyBudgetVsEx() {
         <ResponsiveContainer width="100%" height="100%">
           <BarChart width={150} height={40} data={barChartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="categoryName" />
-            <YAxis />
+            <XAxis stroke="white" dataKey="categoryName" />
+            <YAxis stroke="white" />
             <Tooltip formatter={(value) => `$${value}`} />
             <Legend />
             <Bar dataKey="Amount" fill="#8884d8" />

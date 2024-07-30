@@ -13,13 +13,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { CiLogout } from "react-icons/ci";
-import {
-  FaMoneyCheckAlt,
-  FaBalanceScale,
-  FaChartLine,
-  FaMoneyBill,
-  FaUser,
-} from "react-icons/fa";
+import { FaChartLine, FaMoneyBill, FaUser } from "react-icons/fa";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
@@ -119,19 +113,6 @@ function LeftNavbar({}: Props) {
           >
             <FaChartLine className="mr-[1vw] inline-block h-[2vh] w-[2vw]" />
             Basic Cashflow Overview
-          </Link>
-        </li>
-
-        <li className="mb-[2vh] rounded duration-300 ease-in-out hover:bg-green-600 hover:shadow">
-          <Link
-            href="/l/netWorth"
-            className={
-              "flex items-center px-[2vw] py-[2vh] " +
-              (currentPath === "/l/netWorth" ? "bg-white text-black" : "")
-            }
-          >
-            <FaBalanceScale className="mr-[1vw] inline-block h-[2vh] w-[2vw]" />
-            Net Worth Overview
           </Link>
         </li>
       </ul>

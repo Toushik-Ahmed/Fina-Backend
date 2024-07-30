@@ -42,7 +42,7 @@ function MonthlyTransactionTrend() {
   const generateRandomColors = (amount: number) => {
     const newColors = [];
     for (let i = 0; i < amount; i++) {
-      newColors.push(randomcolor({ luminosity: "dark" }));
+      newColors.push(randomcolor({ luminosity: "light" }));
     }
     setUniqColorList([...newColors]);
   };
@@ -123,8 +123,8 @@ function MonthlyTransactionTrend() {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="dayname" />
-          <YAxis />
+          <XAxis stroke="white" dataKey="dayname" />
+          <YAxis stroke="white" />
           <Tooltip
             formatter={(value) => {
               return `$${value}`;

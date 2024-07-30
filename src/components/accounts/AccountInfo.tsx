@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CardInfo } from "../addCard/CardWithForm";
+import { CardInfo } from '../addCard/CardWithForm';
 
 type Props = {
   accountInfo: CardInfo[];
@@ -15,28 +15,37 @@ type Props = {
 
 const AccountInfo = ({ accountInfo }: Props) => {
   return (
-    <div>
-      <Table>
-        <TableCaption>All Your Account Information.</TableCaption>
+    <div className="rounded-lg bg-gray-900 p-6 text-white m-4">
+      <Table className="w-full">
+        <TableCaption className="mt-4 text-gray-400">
+          All Your Account Information.
+        </TableCaption>
         <TableHeader>
-          <TableRow>
-            <TableHead className="w-[15vw]">Account </TableHead>
-            <TableHead className="w-[15vw]">Bank</TableHead>
-            <TableHead className="w-[15vw]">Type</TableHead>
-            <TableHead className="w-fit-content">Amount</TableHead>
+          <TableRow className="border-b border-gray-700">
+            <TableHead className="w-[25%] text-left text-gray-300">
+              Account
+            </TableHead>
+            <TableHead className="w-[25%] text-left text-gray-300">
+              Bank
+            </TableHead>
+            <TableHead className="w-[25%] text-left text-gray-300">
+              Type
+            </TableHead>
+            <TableHead className="w-[25%] text-right text-gray-300">
+              Amount
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {accountInfo?.map((account, index) => (
-            <TableRow key={index}>
+            <TableRow key={index} className="border-b border-gray-700">
               <TableCell className="font-medium">
                 {account.accountname}
               </TableCell>
               <TableCell>{account.bankname}</TableCell>
               <TableCell>{account.accounttype}</TableCell>
-              <TableCell className="flex justify-between">
-                <div>$</div>
-                {account.totalmoney.toFixed(2)}
+              <TableCell className="text-right">
+                ${account.totalmoney.toFixed(2)}
               </TableCell>
             </TableRow>
           ))}
