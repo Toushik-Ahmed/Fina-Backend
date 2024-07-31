@@ -12,7 +12,12 @@ import { useEffect, useState } from "react";
 import { IoIosRefresh } from "react-icons/io";
 import { IoAdd } from "react-icons/io5";
 
-import { addTransaction, getAllTransaction } from "@/services/apiServices";
+import {
+  addTransaction,
+  getAllTransaction,
+  getTransactionForDateRange,
+} from "@/services/apiServices";
+import { DateTime } from "luxon";
 import { io } from "socket.io-client";
 import LoadingSpinner from "../common/LoadingSpinner";
 import { Button } from "../ui/button";
@@ -25,7 +30,10 @@ import {
 type Props = {};
 
 const Transaction = (props: Props) => {
-   const [transactions, setTransactions] = useState<TransactionCard[]>([]);
+  const [transactions, setTransactions] = useState<TransactionCard[]>([]);
+  const [curMonthTransactions, setCurMonthTransactions] = useState<
+    TransactionCard[]
+  >([]);
   // const { transactions, setTransactions } = useBudget();
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -82,6 +90,24 @@ const Transaction = (props: Props) => {
     getallTransactionsFn();
   };
 
+  const getThisMonthsData = async () => {
+    const today = DateTime.now().endOf("month");
+    const firstDayOfMonth = today.startOf("month");
+    try {
+      const currentData = await getTransactionForDateRange(
+        firstDayOfMonth.toJSDate(),
+        today.toJSDate(),
+      );
+      setCurMonthTransactions(currentData);
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+    }
+  };
+
+  useEffect(() => {
+    getThisMonthsData();
+  }, [transactions]);
+
   return (
     <div>
       <Dialog
@@ -113,7 +139,7 @@ const Transaction = (props: Props) => {
         {loading ? (
           <LoadingSpinner />
         ) : (
-          <TransactionInfo transactionInfo={transactions} />
+          <TransactionInfo transactionInfo={curMonthTransactions} />
         )}
         <div className="mt-5 flex flex-col items-center">
           <DialogContent>

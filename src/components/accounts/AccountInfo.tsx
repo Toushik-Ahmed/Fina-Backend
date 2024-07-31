@@ -25,26 +25,26 @@ const AccountInfo = ({ accountInfo }: Props) => {
             <TableHead className="w-[25%] text-left text-gray-300">
               Account
             </TableHead>
-            <TableHead className="w-[25%] text-left text-gray-300">
+            <TableHead className=" text-left text-gray-300">
               Bank
             </TableHead>
-            <TableHead className="w-[25%] text-left text-gray-300">
+            <TableHead className=" text-left text-gray-300">
               Type
             </TableHead>
-            <TableHead className="w-[25%] text-right text-gray-300">
+            <TableHead className=" text-left text-gray-300">
               Amount
             </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {accountInfo?.map((account, index) => (
-            <TableRow key={index} className="border-b border-gray-700">
+            <TableRow key={index} className="border-b border-gray-700 text-left">
               <TableCell className="font-medium">
                 {account.accountname}
               </TableCell>
               <TableCell>{account.bankname}</TableCell>
               <TableCell>{account.accounttype}</TableCell>
-              <TableCell className="text-right">
+              <TableCell >
                 ${account.totalmoney.toFixed(2)}
               </TableCell>
             </TableRow>

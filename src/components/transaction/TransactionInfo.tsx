@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { TransactionCard } from "./transactionCard/TransactionCard";
+import { DateTime } from 'luxon';
 
 type Props = {
   transactionInfo: TransactionCard[];
@@ -22,23 +23,18 @@ const TransactionInfo = ({ transactionInfo }: Props) => {
         </TableCaption>
         <TableHeader>
           <TableRow className="border-b border-gray-700">
-            <TableHead className="w-[25%] text-left text-gray-300">
+            <TableHead className="text-left text-gray-300">
               Merchant Name{" "}
             </TableHead>
-            <TableHead className="w-[25%] text-left text-gray-300">
-              Type
-            </TableHead>
-            <TableHead className="w-[25%] text-left text-gray-300">
-              Amount
-            </TableHead>
-            <TableHead className="w-[25%] text-left text-gray-300">
-              Category
-            </TableHead>
+            <TableHead className="text-left text-gray-300">Type</TableHead>
+            <TableHead className="text-left text-gray-300">Amount</TableHead>
+            <TableHead className="text-left text-gray-300">Category</TableHead>
+            <TableHead className="text-left text-gray-300">Date</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {transactionInfo?.map((transaction, index) => (
-            <TableRow key={index} className="border-b border-gray-700">
+            <TableRow key={index} className="border-b border-gray-700 text-left">
               <TableCell className="font-medium">
                 {transaction.merchantName}
               </TableCell>
@@ -46,6 +42,7 @@ const TransactionInfo = ({ transactionInfo }: Props) => {
               <TableCell>{transaction.type}</TableCell>
               <TableCell>${transaction.amount}</TableCell>
               <TableCell>{transaction.category}</TableCell>
+              <TableCell>{DateTime.fromISO(transaction.timestamp||"").toFormat('yyyy LLL dd')}</TableCell>
             </TableRow>
           ))}
         </TableBody>

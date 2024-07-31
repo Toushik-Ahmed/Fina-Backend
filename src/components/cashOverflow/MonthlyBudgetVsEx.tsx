@@ -1,4 +1,8 @@
-import { getAllBudget, getAllTransaction } from "@/services/apiServices";
+import {
+  getAllBudget,
+  getTransactionForDateRange,
+} from "@/services/apiServices";
+import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import {
   Bar,
@@ -27,9 +31,14 @@ function MonthlyBudgetVsEx() {
 
   const fetchAllData = async () => {
     setLoading(true);
+    const today = DateTime.now().endOf("month");
+    const firstDayOfMonth = today.startOf("month");
     try {
       const [transactions, budgets] = await Promise.all([
-        getAllTransaction(),
+        getTransactionForDateRange(
+          firstDayOfMonth.toJSDate(),
+          today.toJSDate(),
+        ),
         getAllBudget(),
       ]);
       setBarChartData(

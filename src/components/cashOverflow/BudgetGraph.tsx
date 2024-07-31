@@ -1,5 +1,9 @@
-import { getAllBudget, getAllTransaction } from "@/services/apiServices";
+import {
+  getAllBudget,
+  getTransactionForDateRange,
+} from "@/services/apiServices";
 import { groupBy } from "lodash";
+import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { BudgetCard } from "../budgets/BudgetCard";
@@ -32,11 +36,16 @@ function BudgetGraph() {
   >([]);
 
   const fetchAllData = async () => {
+    const today = DateTime.now().endOf("month");
+    const firstDayOfMonth = today.startOf("month");
     try {
       const allBudget = await getAllBudget();
-      const allTransaction = await getAllTransaction();
+      const currentMonthsTransaaction = await getTransactionForDateRange(
+        firstDayOfMonth.toJSDate(),
+        today.toJSDate(),
+      );
       setBudget(allBudget);
-      setTransaction(allTransaction);
+      setTransaction(currentMonthsTransaaction);
     } catch (error) {
       console.log(error);
     }

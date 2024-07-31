@@ -36,13 +36,13 @@ const BudgetInfo = ({ budgetInfo, onEdit, onDelete }: Props) => {
             <TableHead className="w-[25%] text-left text-gray-300">
               Category
             </TableHead>
-            <TableHead className="w-[25%] text-right text-gray-300">
+            <TableHead className=" text-left text-gray-300">
               Budget
             </TableHead>
-            <TableHead className="w-[25%] text-right text-gray-300 pr-8">
+            <TableHead className="w-[25%] text-left text-gray-300 pl-8">
               Edit
             </TableHead>
-            <TableHead className="w-[25%] text-right text-gray-300 pr-8">
+            <TableHead className="w-[25%] text-left text-gray-300 pl-8">
               Delete
             </TableHead>
           </TableRow>
@@ -50,9 +50,9 @@ const BudgetInfo = ({ budgetInfo, onEdit, onDelete }: Props) => {
         <TableBody>
           {budgetInfo?.map((budget) => (
             <TableRow key={budget.id} className="border-b border-gray-700">
-              <TableCell className="font-medium">{budget.category}</TableCell>
-              <TableCell className='text-right'>${budget.budget}</TableCell>
-              <TableCell className='text-right'>
+              <TableCell className="font-medium text-left">{budget.category}</TableCell>
+              <TableCell className='text-left'>${budget.budget}</TableCell>
+              <TableCell className='text-left'>
                 <Button
                   variant="outline"
                   className="bg-gray-500"
@@ -61,7 +61,7 @@ const BudgetInfo = ({ budgetInfo, onEdit, onDelete }: Props) => {
                   Edit
                 </Button>
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell className="text-left">
                 <Button
                   variant="outline"
                   className="bg-red-400"

@@ -4,8 +4,10 @@ import {
   getAllAccounts,
   getAllBudget,
   getAllTransaction,
+  getTransactionForDateRange,
 } from "@/services/apiServices";
 import { getCurrentUserData, User } from "@/services/authServices";
+import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import {
   FaBalanceScale,
@@ -22,6 +24,12 @@ function Dashboard() {
   const [transactions, setTransactions] = useState<TransactionCard[]>([]);
   const [budgets, setBudgets] = useState<BudgetCard[]>([]);
   const [user, setUser] = useState<User>();
+  const [curMonthTransactions, setCurMonthTransactions] = useState<
+    TransactionCard[]
+  >([]);
+  const [prevMonthsTransactions, setPrevMonthsTransactions] = useState<
+    TransactionCard[]
+  >([]);
 
   useEffect(() => {
     const getCurrentUserDataFn = async () => {
@@ -35,7 +43,7 @@ function Dashboard() {
     getCurrentUserDataFn();
   }, []);
 
-  const getallAccountsFn = async () => {
+  const getallInfo = async () => {
     try {
       const allAccounts = await getAllAccounts();
       const allTransactions = await getAllTransaction();
@@ -47,19 +55,57 @@ function Dashboard() {
       console.error("Error fetching accounts:", error);
     }
   };
+  const getThisMonthsData = async () => {
+    const today = DateTime.now().endOf("day");
+    const firstDayOfMonth = today.startOf("month");
+    try {
+      const currentData = await getTransactionForDateRange(
+        firstDayOfMonth.toJSDate(),
+        today.toJSDate(),
+      );
+      setCurMonthTransactions(currentData);
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+    }
+  };
+  const getPreviousMonthsData = async () => {
+    const lastDayOfPreviousMonth = DateTime.now()
+      .startOf("month")
+      .minus({ days: 1 });
+    const firstDayOfPreviousMonth = lastDayOfPreviousMonth.startOf("month");
+    try {
+      const previousData = await getTransactionForDateRange(
+        firstDayOfPreviousMonth.toJSDate(),
+        lastDayOfPreviousMonth.toJSDate(),
+      );
+      setPrevMonthsTransactions(previousData);
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+    }
+  };
 
   useEffect(() => {
-    getallAccountsFn();
+    getallInfo();
+    getThisMonthsData();
+    getPreviousMonthsData();
   }, []);
 
   const totalCash = accounts.reduce((acc, el) => acc + el.totalmoney, 0);
   const totalExpense = transactions.reduce((acc, tx) => acc + tx.amount, 0);
+  const curMonthsTotalExpense = curMonthTransactions.reduce(
+    (acc, tx) => acc + tx.amount,
+    0,
+  );
+  const prevMonthsTotalExpense = prevMonthsTransactions.reduce(
+    (acc, cur) => acc + cur.amount,
+    0,
+  );
 
   type CategoryTotals = {
     [key: string]: number;
   };
 
-  const categoryTotals: CategoryTotals = transactions.reduce(
+  const categoryTotals: CategoryTotals = curMonthTransactions.reduce(
     (acc: CategoryTotals, tx: TransactionCard) => {
       acc[tx.category] = (acc[tx.category] || 0) + tx.amount;
       return acc;
@@ -99,7 +145,7 @@ function Dashboard() {
           overview.
         </p>
 
-        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 mt-5">
+        <div className="mb-8 mt-5 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           <div className="flex flex-col items-center rounded-lg bg-white p-6 shadow-md">
             <div className="mb-4 flex items-center gap-6">
               <h3 className="text-lg font-semibold text-gray-700">
@@ -107,9 +153,7 @@ function Dashboard() {
               </h3>
               <FaWallet className="text-green-500" />
             </div>
-            <p className="text-3xl font-bold text-green-500">
-              ${totalCash.toLocaleString()}
-            </p>
+            <p className="text-3xl font-bold text-green-500">${totalCash}</p>
           </div>
 
           <div className="flex flex-col items-center rounded-lg bg-white p-6 shadow-md">
@@ -119,9 +163,7 @@ function Dashboard() {
               </h3>
               <FaChartLine className="text-red-500" />
             </div>
-            <p className="text-3xl font-bold text-red-500">
-              ${totalExpense.toLocaleString()}
-            </p>
+            <p className="text-3xl font-bold text-red-500">${totalExpense}</p>
           </div>
 
           <div className="flex flex-col items-center rounded-lg bg-white p-6 shadow-md">
@@ -135,7 +177,7 @@ function Dashboard() {
               {mostExpensiveCategory || "None"}
             </p>
             <p className="mt-1 text-sm text-green-500">
-              ${mostExpensiveAmount.toLocaleString()}
+              ${mostExpensiveAmount}
             </p>
           </div>
 
@@ -147,7 +189,7 @@ function Dashboard() {
               <FaBalanceScale className="text-blue-500" />
             </div>
             <p className="text-3xl font-bold text-gray-800">
-              ${remainingBalance.toLocaleString()}
+              ${remainingBalance}
             </p>
           </div>
         </div>
@@ -164,8 +206,7 @@ function Dashboard() {
                     {category.category}
                   </p>
                   <p className="text-sm text-gray-600">
-                    Amount: ${category.amount.toLocaleString()} / Budget: $
-                    {category.budget.toLocaleString()}
+                    Amount: ${category.amount} / Budget: ${category.budget}
                   </p>
                 </div>
               ))
@@ -187,13 +228,35 @@ function Dashboard() {
                     {category[0]}
                   </p>
                   <p className="text-sm text-gray-600">
-                    Expense: ${category[1].toLocaleString()}
+                    Expense: ${category[1]}
                   </p>
                 </div>
               ))
             ) : (
               <p className="text-lg text-green-500">No expenses.</p>
             )}
+          </div>
+          <div className="flex flex-col items-center rounded-lg bg-white p-6 shadow-md">
+            <div className="mb-4 flex items-center justify-between gap-6">
+              <h3 className="text-lg font-semibold text-red-500">
+                Total Expense(This Month)
+              </h3>
+              <FaChartLine className="text-red-500" />
+            </div>
+            <p className="text-3xl font-bold text-red-500">
+              ${curMonthsTotalExpense}
+            </p>
+          </div>
+          <div className="flex flex-col items-center rounded-lg bg-white p-6 shadow-md">
+            <div className="mb-4 flex items-center justify-between gap-6">
+              <h3 className="text-lg font-semibold text-red-500">
+                Total Expense(Previous Month)
+              </h3>
+              <FaChartLine className="text-red-500" />
+            </div>
+            <p className="text-3xl font-bold text-red-500">
+              ${prevMonthsTotalExpense}
+            </p>
           </div>
         </div>
       </div>

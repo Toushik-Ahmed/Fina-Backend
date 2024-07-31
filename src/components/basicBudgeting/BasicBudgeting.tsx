@@ -9,7 +9,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getAllBudget, getAllTransaction } from "@/services/apiServices";
+import {
+  getAllBudget,
+  getTransactionForDateRange,
+} from "@/services/apiServices";
+import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { BudgetCard } from "../budgets/BudgetCard";
 import LoadingSpinner from "../common/LoadingSpinner";
@@ -22,14 +26,17 @@ const BasicBudgeting = (props: Props) => {
   const [budgets, setBudgets] = useState<BudgetCard[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const getallTransactionsFn = async () => {
-    setLoading(true);
+  const getThisMonthsTransaction = async () => {
+    const today = DateTime.now().endOf("month");
+    const firstDayOfMonth = today.startOf("month");
     try {
-      const allUsers = await getAllTransaction();
-      setTransactions(allUsers);
-      setLoading(false);
+      const currentData = await getTransactionForDateRange(
+        firstDayOfMonth.toJSDate(),
+        today.toJSDate(),
+      );
+      setTransactions(currentData);
     } catch (error) {
-      console.error("Error fetching events:", error);
+      console.error("Error fetching transactions:", error);
     }
   };
 
@@ -45,7 +52,7 @@ const BasicBudgeting = (props: Props) => {
   };
   useEffect(() => {
     getallBudgetsFn();
-    getallTransactionsFn();
+    getThisMonthsTransaction();
   }, []);
 
   const chooseProgressColor = (val: number) => {
@@ -63,21 +70,27 @@ const BasicBudgeting = (props: Props) => {
 
   return (
     <div className="p-10">
-      <div className="mb-8 text-white font-semibold text-xl">
+      <div className="mb-8 text-xl font-semibold text-white">
         Expense vs Budget
-        <div className='text-green-300 font-medium'>Here you can keep track of your expenses and budgets of all categories </div>
+        <div className="font-medium text-green-300">
+          Here you can keep track of your expenses and budgets of all categories{" "}
+        </div>
       </div>
       {loading ? (
         <LoadingSpinner />
       ) : (
         <Table className="mx-auto w-[50vw]">
-          <TableCaption className='text-white font-medium'>Expense by Category with Budget</TableCaption>
+          <TableCaption className="font-medium text-white">
+            Expense by Category with Budget
+          </TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[25vw] text-white font-bold">Category</TableHead>
-              <TableHead className='text-white font-bold'>Amount</TableHead>
+              <TableHead className="w-[25vw] font-bold text-white">
+                Category
+              </TableHead>
+              <TableHead className="font-bold text-white">Amount</TableHead>
               <TableHead className="w-[25vw]"></TableHead>
-              <TableHead className='text-white font-bold'>Budget</TableHead>
+              <TableHead className="font-bold text-white">Budget</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
