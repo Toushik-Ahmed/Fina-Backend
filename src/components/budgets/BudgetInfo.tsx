@@ -36,7 +36,7 @@ const BudgetInfo = ({ budgetInfo, onEdit, onDelete }: Props) => {
             <TableHead className="w-[25%] text-left text-gray-300">
               Category
             </TableHead>
-            <TableHead className=" text-left text-gray-300">
+            <TableHead className="w-[25%] text-left text-gray-300">
               Budget
             </TableHead>
             <TableHead className="w-[25%] text-left text-gray-300 pl-8">
