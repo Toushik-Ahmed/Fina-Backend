@@ -80,7 +80,7 @@ export function CardWithForm({ onSubmit }: Props) {
             </Select>
           </div>
           {cardInfo.accounttype !== "Manual" && (
-            <div className="grid w-full items-center gap-4">
+            <div className="mt-4 grid w-full items-center">
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="accountname">Account Name</Label>
                 <Input
@@ -98,7 +98,7 @@ export function CardWithForm({ onSubmit }: Props) {
                   </div>
                 )}
               </div>
-              <div className="flex flex-col space-y-1.5">
+              <div className="mt-4 flex flex-col space-y-1.5">
                 <Label htmlFor="bankname">Bank Name</Label>
                 <Input
                   value={cardInfo.bankname}
@@ -109,7 +109,7 @@ export function CardWithForm({ onSubmit }: Props) {
               </div>
             </div>
           )}{" "}
-          <div className="flex flex-col space-y-1.5">
+          <div className="mt-4 flex flex-col space-y-1.5">
             <Label htmlFor="transferedMoney">Transferred Money</Label>
             <Input
               onFocus={(ev) => ev.target.select()}
