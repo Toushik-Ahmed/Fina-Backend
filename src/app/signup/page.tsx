@@ -1,9 +1,18 @@
-'use client'
-import SignUp from '@/components/signup/SignUp';
+"use client";
+import SignUp from "@/components/signup/SignUp";
+import { getToken } from "@/services/TokenService";
+import { redirect } from "next/navigation";
+import { useLayoutEffect } from "react";
 
 type Props = {};
 
 function page({}: Props) {
+  useLayoutEffect(() => {
+    const curUser = getToken();
+    if (curUser) {
+      redirect("/l/accounts");
+    }
+  }, []);
 
   return <SignUp />;
 }

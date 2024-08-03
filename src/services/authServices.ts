@@ -27,7 +27,7 @@ export interface User {
 
 // Signup function
 export const signUp = async (
-  data: SignUpUser
+  data: SignUpUser,
 ): Promise<{ accessToken: string }> => {
   const response = await axios.post(`${baseUrl}/signup`, data);
   return response.data;
@@ -35,7 +35,7 @@ export const signUp = async (
 
 // Login function
 export const logIn = async (
-  data: LogInUser
+  data: LogInUser,
 ): Promise<{ accessToken: string }> => {
   const response = await axios.post(`${baseUrl}/login`, data);
   return response.data;
@@ -44,8 +44,8 @@ export const logIn = async (
 export const getCurrentUserData = async (): Promise<User> => {
   const response = await axios.get(`${baseUrl}/getLoggedInUser`, {
     headers: {
-      'Authorization': `Bearer ${getToken()}`
-    }
+      Authorization: `Bearer ${getToken()}`,
+    },
   });
   return response.data;
 };
