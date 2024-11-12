@@ -52,7 +52,7 @@ export const addTransaction = async (data: TransactionCard) => {
       Authorization: `Bearer ${getToken()}`,
     },
   });
-  console.log();
+ 
   return add.data;
 };
 
@@ -64,7 +64,7 @@ export const addMerchant = async (data: MerchantCard) => {
       Authorization: `Bearer ${getToken()}`,
     },
   });
-  console.log();
+ 
   return add.data;
 };
 
@@ -89,7 +89,7 @@ export const addBudget = async (data: BudgetCard) => {
       Authorization: `Bearer ${getToken()}`,
     },
   });
-  console.log();
+ 
   return add.data;
 };
 

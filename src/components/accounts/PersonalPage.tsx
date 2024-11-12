@@ -23,7 +23,7 @@ function PersonalPage({}: Props) {
       <Tabs defaultValue="account" className="mx-auto max-w-3xl">
         <TabsList className="w-full">
           <TabsTrigger asChild value="account" className="flex-grow">
-            <button className="flex items-center gap-2 border-b-2 border-solid border-transparent data-[state=active]:border-green-500">
+            <button className="flex items-center gap-2  data-[state=active]:borborder-b-2 border-solid border-transparentder-green-500">
               <MdOutlineAccountBalance className="h-4 w-4" /> Account
             </button>
           </TabsTrigger>

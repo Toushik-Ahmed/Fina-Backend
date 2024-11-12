@@ -31,7 +31,7 @@ function Accounts({}: Props) {
     setLoading(true);
     try {
       const allUsers = await getAllAccounts();
-      console.log(allUsers)
+      console.log(allUsers);
       setaccountInfo(allUsers);
 
       setLoading(false);
@@ -54,16 +54,6 @@ function Accounts({}: Props) {
   const handleRefresh = async () => {
     getallaccountsFn();
   };
-
-
-
-
-
-
-
-
-
-
 
   return (
     <div>
