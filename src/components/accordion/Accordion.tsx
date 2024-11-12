@@ -36,7 +36,7 @@ const AccordionComp = (props: Props) => {
         <AccordionItem value="item-1">
           <AccordionTrigger>Is my data safe?</AccordionTrigger>
           <AccordionContent>
-            Yes. We never store or share your banking credentials.It's tottaly
+            Yes. We never store or share your banking credentials.It&apos;s tottaly
             safe
           </AccordionContent>
         </AccordionItem>

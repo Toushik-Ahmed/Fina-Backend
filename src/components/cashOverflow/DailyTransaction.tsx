@@ -63,7 +63,7 @@ function DailyTransaction() {
 
   useEffect(() => {
     getTodaysData();
-  }, []);
+  });
   return (
     <div className="h-[40vh] w-full">
       <ResponsiveContainer width="100%" height="100%">

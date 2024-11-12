@@ -143,7 +143,7 @@ const page = (props: Props) => {
               </div>
 
               <div className="mt-4">
-                Create as many categories as you need! Don't worry, we have
+                Create as many categories as you need! Don&apos;t worry, we have
                 emojis to give them some flare
               </div>
             </div>
@@ -184,7 +184,7 @@ const page = (props: Props) => {
               <div className="mt-4">
                 Create as many categories as you need! Based on these categories
                 you will be able to keep track your money.Based on categories
-                you can set your budget.It's very easy to create categories and
+                you can set your budget.It&apos;s very easy to create categories and
                 budgets.
               </div>
             </div>
@@ -237,7 +237,7 @@ const page = (props: Props) => {
             <div className="flex flex-col justify-between rounded border-4 bg-[#0f1111] bg-black text-black">
               {/* <div className="p-4"> */}
               <div className="p-8 text-white">
-                It's not about what you make, it's about what you keep. I've
+                It&apos;s not about what you make, it&apos;s about what you keep. I&apos;ve
                 been loving Fina so far.
               </div>
               <div className="mt-4 bg-white p-4 font-bold">
@@ -266,7 +266,7 @@ const page = (props: Props) => {
             <div className="flex flex-col justify-between rounded border-4 bg-[#0f1111] bg-black text-black">
               {/* <div className="p-4"> */}
               <div className="p-8 text-white">
-                I just started using Fina and it's amazing! I've been wanting to
+                I just started using Fina and it&apos;s amazing! I&apos;ve been wanting to
                 create a budget and this is the perfect tool for it.
               </div>
               <div className="mt-4 bg-white p-4 font-bold">
@@ -281,7 +281,7 @@ const page = (props: Props) => {
       </div>
       <div className="flex items-center justify-center">
         <div className="w-fit flex-col p-10 text-center">
-          <div className="text-xl font-medium text-[#3ef194]">FAQ'S</div>
+          <div className="text-xl font-medium text-[#3ef194]">FAQ&apos;S</div>
           <div className="mt-[6vh]">
             <div className="text-4xl font-bold text-white">
               Got Any Questions?

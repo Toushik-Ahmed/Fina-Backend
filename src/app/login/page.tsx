@@ -6,7 +6,7 @@ import { useLayoutEffect } from "react";
 
 type Props = {};
 
-function page({}: Props) {
+function Page({}: Props) {
   useLayoutEffect(() => {
     const curUser = getToken();
     if (curUser) {
@@ -17,4 +17,4 @@ function page({}: Props) {
   return <LogIn />;
 }
 
-export default page;
+export default Page;
